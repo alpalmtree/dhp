@@ -1,0 +1,53 @@
+{
+  "name": "@timberstack/hwr",
+  "version": "0.0.0",
+  "description": "A vanilla PHP-like experience for javascript",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "hwr": "dist/cli.js"
+  },
+  "scripts": {
+    "test": "vitest",
+    "fmt": "biome format --write",
+    "lint": "biome lint",
+    "cs": "changeset",
+    "version": "changeset version",
+    "version:test": "changeset version --snapshot charmander",
+    "release": "pnpm run build && changeset publish",
+    "release:test": "changeset publish --no-git-tag --tag charmander",
+    "build": "tsup ./src/index.ts ./src/cli.ts ./src/ViteHead.tsx --format esm --dts",
+    "publish:test": "rm -rf /dist && pnpm run build && pnpm run version:test && pnpm run release:test "
+  },
+  "keywords": [
+    "php",
+    "file-based-routing",
+    "server side rendering"
+  ],
+  "author": "Álvaro Palma Mancheño",
+  "license": "MIT",
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "@types/deno": "^2.3.0",
+    "@types/node": "^22.15.3",
+    "hono": "^4.7.8",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.4",
+    "vitest": "^3.0.9"
+  },
+  "files": [
+    "dist/",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "packageManager": "pnpm@9.0.6+sha1.648f6014eb363abb36618f2ba59282a9eeb3e879",
+  "peerDependencies": {
+    "hono": "^4.7.8",
+    "vite": "^6.3.4"
+  }
+}
