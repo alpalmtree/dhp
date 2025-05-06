@@ -1,0 +1,18 @@
+{
+  "tasks": {
+    "dev": "hwr dev",
+    "start": "hwr start",
+    "build": "hwr build",
+    "init": "hwr init"
+  },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@timberstack/hwr": "../../src/index.ts",
+    "hono": "npm:hono@^4.7.8",
+    "vite": "npm:vite@^6.3.4"
+  }
+}
