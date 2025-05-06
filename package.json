@@ -1,6 +1,6 @@
 {
   "name": "@timberstack/hwr",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A vanilla PHP-like experience for javascript",
   "type": "module",
   "main": "dist/index.js",
