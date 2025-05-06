@@ -30,6 +30,7 @@
   "license": "MIT",
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
+    "@timberstack/vite-plugin-better-manifest": "^0.0.2",
     "@types/deno": "^2.3.0",
     "@types/node": "^22.15.3",
     "hono": "^4.7.8",

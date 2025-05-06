@@ -1,9 +1,9 @@
 {
   "tasks": {
-    "dev": "hwr dev",
-    "start": "hwr start",
-    "build": "hwr build",
-    "init": "hwr init"
+    "dev": "deno run -A ../../src/cli.ts dev",
+    "start": "deno run -A ../../src/cli.ts start",
+    "build": "deno run -A ../../src/cli.ts build",
+    "init": "deno run -A ../../src/cli.ts init"
   },
   "compilerOptions": {
     "jsx": "precompile",
@@ -12,6 +12,7 @@
   "nodeModulesDir": "auto",
   "imports": {
     "@timberstack/hwr": "../../src/index.ts",
+    "@timberstack/vite-plugin-better-manifest": "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
     "hono": "npm:hono@^4.7.8",
     "vite": "npm:vite@^6.3.4"
   }

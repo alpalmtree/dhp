@@ -1,12 +1,6 @@
-import {
-    appConfig,
-    Config,
-    generateRouteFiles,
-    runtimeConfig,
-} from "./index.ts";
+import { appConfig, generateRouteFiles } from "./index.ts";
 import { argv, cwd } from "node:process";
 import { writeFileSync } from "node:fs";
-import { generateHeadScripts } from "./importedChunks.ts";
 import { build, createServer, UserConfig } from "vite";
 
 export const viteDevServer = async (config: UserConfig = {}) => {
@@ -25,15 +19,15 @@ if (!command || !availableCommands.includes(command)) {
     Deno.exit();
 }
 
-const bootstrapTemplate = (viteDevMode: boolean) => `
+const bootstrapTemplate = () => `
 /**
  * CAUTION: This file will be re-generated whenever you start the dev server.
  * If you want to edit anything, use a hwr.config.ts file or export your middleware
  */
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import { createRouter, runtimeConfig } from "@timberstack/hwr";
-runtimeConfig.viteDevMode = ${JSON.stringify(viteDevMode)}
+import { createRouter } from "@timberstack/hwr";
+
 
 const app = new Hono();
 
@@ -67,47 +61,26 @@ export const action = (
   return foundAction ?? 'not-found';
 };`;
 
-const generateTemplateFiles = (
-    { viteDevMode }: Config,
-) => {
+const generateTemplateFiles = () => {
     writeFileSync(
         `${cwd()}${appConfig.routerPath}/route-getters.ts`,
         routeGettersTemplate,
     );
     writeFileSync(
         `${cwd()}${appConfig.routerPath}/bootstrap.ts`,
-        bootstrapTemplate(viteDevMode!),
+        bootstrapTemplate(),
     );
 };
 
 const commands: { [key: string]: () => void } = {
     "init": () => {
-        generateTemplateFiles(appConfig);
+        generateTemplateFiles();
     },
     "build": async () => {
-        appConfig.viteDevMode = false;
-        generateTemplateFiles(appConfig);
+        generateTemplateFiles();
         await generateRouteFiles();
         if (!appConfig.useVite) return;
-
-        await build({
-            build: appConfig.vite?.build,
-        });
-
-        const files = appConfig.vite?.build?.rollupOptions
-            ?.input as string[];
-        const entrypoints = files?.map((file) =>
-            file.replace(`${Deno.cwd()}/`, "")
-        );
-        const builtHeads = entrypoints.reduce((acc, current) => {
-            acc[current] = generateHeadScripts(current);
-            return acc;
-        }, {} as { [key: string]: string });
-
-        writeFileSync(
-            `${cwd()}${appConfig.routerPath}/vite.scripts.json`,
-            JSON.stringify(builtHeads),
-        );
+        await build(appConfig.vite);
     },
     "start": () => {
         const start = new Deno.Command("deno", {
@@ -117,7 +90,7 @@ const commands: { [key: string]: () => void } = {
         start.spawn();
     },
     "dev": async () => {
-        generateTemplateFiles(appConfig);
+        generateTemplateFiles();
 
         const dev = new Deno.Command("deno", {
             args:
@@ -125,7 +98,6 @@ const commands: { [key: string]: () => void } = {
                     .split(" "),
         });
 
-        runtimeConfig.viteDevMode = true;
         dev.spawn();
         if (appConfig.useVite) await viteDevServer(appConfig.vite);
     },

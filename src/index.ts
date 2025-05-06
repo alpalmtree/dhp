@@ -10,6 +10,7 @@ import type { PathLike } from "node:fs";
 import { cwd } from "node:process";
 import type { Context, Hono } from "hono";
 import type { UserConfig } from "vite";
+import BetterManifest from "@timberstack/vite-plugin-better-manifest";
 
 const isFile = (path: string) => path.includes(".");
 
@@ -27,70 +28,51 @@ export type Config = {
 
 const currentDir: string = cwd();
 
-const createViteConfig = (
-  entrypoints: string[],
-  appConfig: Config,
-): UserConfig => {
-  return {
-    build: {
-      manifest: true,
-      copyPublicDir: false,
-      outDir: `.${appConfig.publicDir}`,
-      emptyOutDir: false,
-      rollupOptions: {
-        input: entrypoints,
-      },
-    },
-  };
-};
-
 const defaultConfig: Config = {
   // Folder to be used as root for the router
   viewsDir: "/views",
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
-  // Serve the routes directly from your root folder by default. Change it to true if you want to use the generated router file instead.
+  // Change it to true if you want to use the generated router file. Needs build
   precompile: false,
   // Folder where the generated files will live
   routerPath: "/file-router",
   // You can opt out from vite by setting this to false
   useVite: true,
   // Entry points for vite build
-  resourcesPath: "/resources/entrypoints",
-  // Set it to false for production. Don't forge to run "hwr --build" first!
+  resourcesPath: "/resources",
+  // Set it to false for production. Needs build
   viteDevMode: true,
-  vite: {},
 };
 
 export const appConfig: Config = defaultConfig;
 export const runtimeConfig: Config = {};
 
 const defaultConfigTemplate = `
-import { Config } from "@timberstack/hwr";
-
 /**
  * This file will only be generated only if it doesn't exists.
  * It is an exact copy of the default config used by HWR.
  * Feel free to remove the options that you don't need.
 */
+import { Config } from "@timberstack/hwr";
 
 export default {
   // Folder to be used as root for the router
   viewsDir: "/views",
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
-  // Serve the routes directly from your root folder by default. Change it to true if you want to use the generated router file instead.
+  // Change it to true if you want to use the generated router file. Needs build
   precompile: false,
   // Folder where the generated files will live
   routerPath: "/file-router",
   // You can opt out from vite by setting this to false
   useVite: true,
   // Entry points for vite build
-  resourcesPath: "/resources/entrypoints",
-  // Set it to false for production. Don't forge to run "hwr --build" first!
+  resourcesPath: "/resources",
+  // Set it to false for production. Needs build
   viteDevMode: true,
-} satisfies Config
-`;
+} satisfies Config;
+`.trimStart();
 
 if (!existsSync(`${currentDir}/hwr.config.ts`)) {
   writeFileSync(`${currentDir}/hwr.config.ts`, defaultConfigTemplate);
@@ -101,17 +83,17 @@ try {
   Object.assign(appConfig, userConfig);
 } catch (_) { /** */ }
 
-const resourcesDir = readdirSync(`${currentDir}${appConfig.resourcesPath!}`, {
-  recursive: true,
-}) as string[];
-const buildPaths = resourcesDir.filter((file) => isFile(file)).map((file) =>
-  `${currentDir}${appConfig.resourcesPath}/${file}`
-);
-
 appConfig.vite = {
   ...appConfig.vite,
-  ...createViteConfig(buildPaths, appConfig),
 };
+
+appConfig.vite!.plugins = [
+  ...appConfig.vite!.plugins ?? [],
+  BetterManifest({
+    resourcesDir: appConfig.resourcesPath,
+    publicDir: appConfig.publicDir,
+  }),
+];
 
 // ------ File router --------
 const fileRouterPath: PathLike = `${currentDir}${appConfig.routerPath}`;
@@ -127,9 +109,9 @@ const getNames = (name: "actions" | "namedRoutes") => {
 };
 
 const getViteScripts = () => {
-  if (existsSync(`${fileRouterPath}/vite.scripts.json`)) {
+  if (existsSync(`${cwd()}/.vite/better-manifest.json`)) {
     const scripts = JSON.parse(
-      readFileSync(`${fileRouterPath}/vite.scripts.json`, {
+      readFileSync(`${cwd()}/.vite/better-manifest.json`, {
         encoding: "utf-8",
       }),
     );
@@ -213,7 +195,7 @@ const getPaths = () => {
   const allPaths = dirs
     .toReversed()
     .filter(
-      (path) => isFile(path as string),
+      (path) => isFile(path as string) && !path.startsWith("."),
     );
 
   const { staticPaths, dynamicPaths } = allPaths.reduce(
@@ -246,6 +228,12 @@ const populateGlobals = async () => {
 
   for (const path of paths) {
     const exportPath = `${currentDir}${appConfig.viewsDir}/${path}`;
+    // let exports;
+    // try {
+    //   exports = await import(exportPath);
+    // } catch {
+    //   continue;
+    // }
     const exports = await import(exportPath);
     const name = exports.name;
     const exportedActions = exports.actions;

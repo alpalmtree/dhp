@@ -1,0 +1,17 @@
+{
+  "about.js": {
+    "file": "assets/about-C-c5UV__.js",
+    "name": "about",
+    "src": "about.js",
+    "isEntry": true
+  },
+  "index.js": {
+    "file": "assets/index-DtPNLtJU.js",
+    "name": "index",
+    "src": "index.js",
+    "isEntry": true,
+    "css": [
+      "assets/index-AsAqjZcY.css"
+    ]
+  }
+}

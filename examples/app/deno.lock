@@ -1,11 +1,10 @@
 {
   "version": "5",
   "specifiers": {
-    "npm:@timberstack/hwr@0.0.0-charmander-20250504155142": "0.0.0-charmander-20250504155142_hono@4.7.8_vite@6.3.4__picomatch@4.0.2",
-    "npm:@timberstack/hwr@^0.0.0-charmander-20250504155142": "0.0.0-charmander-20250504155142_hono@4.7.8_vite@6.3.4__picomatch@4.0.2",
-    "npm:@timberstack/hwr@charmander": "0.0.0-charmander-20250504155142_hono@4.7.8_vite@6.3.4__picomatch@4.0.2",
+    "npm:@timberstack/hwr@^0.0.1": "0.0.1_hono@4.7.8_vite@6.3.5__picomatch@4.0.2",
+    "npm:@timberstack/vite-plugin-better-manifest@^0.0.2": "0.0.2_vite@6.3.5__picomatch@4.0.2",
     "npm:hono@^4.7.8": "4.7.8",
-    "npm:vite@^6.3.4": "6.3.4_picomatch@4.0.2"
+    "npm:vite@^6.3.4": "6.3.5_picomatch@4.0.2"
   },
   "npm": {
     "@esbuild/aix-ppc64@0.25.3": {
@@ -233,13 +232,19 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
-    "@timberstack/hwr@0.0.0-charmander-20250504155142_hono@4.7.8_vite@6.3.4__picomatch@4.0.2": {
-      "integrity": "sha512-vZrKjxULPrMK/y9QNrsF8VAroN1wgJ196O7dQNsd3AEftKP8ZEPdtY3fBgCvCq2AzBS8WRdkOoJLQCsG6WMZAA==",
+    "@timberstack/hwr@0.0.1_hono@4.7.8_vite@6.3.5__picomatch@4.0.2": {
+      "integrity": "sha512-kfQCsEWgqJmzCCKsIvQDFNco/DkK0DAWFArII6QKIW5I63a0kW6nzy9vJQeW/jvRbVgUzovLd5iJzZb537pptg==",
       "dependencies": [
         "hono",
         "vite"
       ],
       "bin": true
+    },
+    "@timberstack/vite-plugin-better-manifest@0.0.2_vite@6.3.5__picomatch@4.0.2": {
+      "integrity": "sha512-2OS3jcy/3iH2Jhj+/1ME5OLzMLhqghv3O85FImD0tQloJwBo2/bwoKOD5Lv7v/dROINxHaqAmZYnJ4umqZ80DA==",
+      "dependencies": [
+        "vite"
+      ]
     },
     "@types/estree@1.0.7": {
       "integrity": "sha512-w28IoSUCJpidD/TGviZwwMJckNESJZXFu7NBZ5YJ4mEUnNraUn9Pm8HSZm/jDF1pDWYKspWE7oVphigUPRakIQ=="
@@ -351,8 +356,8 @@
         "picomatch"
       ]
     },
-    "vite@6.3.4_picomatch@4.0.2": {
-      "integrity": "sha512-BiReIiMS2fyFqbqNT/Qqt4CVITDU9M9vE+DKcVAsB+ZV0wvTKd+3hMbkpxz1b+NmEDMegpVbisKiAZOnvO92Sw==",
+    "vite@6.3.5_picomatch@4.0.2": {
+      "integrity": "sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==",
       "dependencies": [
         "esbuild",
         "fdir",
@@ -369,6 +374,7 @@
   },
   "workspace": {
     "dependencies": [
+      "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
       "npm:hono@^4.7.8",
       "npm:vite@^6.3.4"
     ]
