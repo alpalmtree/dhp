@@ -1,0 +1,19 @@
+{
+  "tasks": {
+    "test": "deno test -A __tests__/tests",
+    "cs": "changeset",
+    "version": "changeset version",
+    "version:test": "changeset version --snapshot charmander",
+    "release": "pnpm run build && changeset publish",
+    "release:test": "changeset publish --no-git-tag --tag charmander",
+    "build": "deno run -A scripts/build.ts",
+    "publish:test": "rm -rf /dist && pnpm run build && pnpm run version:test && pnpm run release:test "
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/cli": "jsr:@std/cli@^1.0.17",
+    "@std/expect": "jsr:@std/expect@^1.0.15",
+    "@std/fs": "jsr:@std/fs@^1.0.17"
+  }
+}

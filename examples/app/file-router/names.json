@@ -1,1 +1,11 @@
-{"actions":{"createUser":"/?action=createUser"},"namedRoutes":{"nested.contact":"/nested/contact","nested":"/nested","about":"/about","index":"/","dynamic.greeting":"/nested/:greeting","dynamic":"/nested/:username/user"}}
+{
+  "actions": { "createUser": "/?action=createUser" },
+  "namedRoutes": {
+    "nested.contact": "/nested/contact",
+    "nested": "/nested",
+    "about": "/about",
+    "index": "/",
+    "dynamic.greeting": "/nested/:greeting",
+    "dynamic": "/nested/:username/user"
+  }
+}

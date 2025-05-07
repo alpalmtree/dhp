@@ -4,19 +4,19 @@ import { writeFileSync } from "node:fs";
 import { build, createServer, UserConfig } from "vite";
 
 export const viteDevServer = async (config: UserConfig = {}) => {
-    const server = await createServer(config);
-    await server.listen();
+  const server = await createServer(config);
+  await server.listen();
 
-    server.printUrls();
-    server.bindCLIShortcuts({ print: true });
+  server.printUrls();
+  server.bindCLIShortcuts({ print: true });
 };
 
 const availableCommands = ["start", "dev", "build", "init"];
 
 const command = argv.at(2);
 if (!command || !availableCommands.includes(command)) {
-    console.log(`Available commands are: ${availableCommands.join(" | ")}`);
-    Deno.exit();
+  console.log(`Available commands are: ${availableCommands.join(" | ")}`);
+  Deno.exit();
 }
 
 const bootstrapTemplate = () => `
@@ -62,45 +62,45 @@ export const action = (
 };`;
 
 const generateTemplateFiles = () => {
-    writeFileSync(
-        `${cwd()}${appConfig.routerPath}/route-getters.ts`,
-        routeGettersTemplate,
-    );
-    writeFileSync(
-        `${cwd()}${appConfig.routerPath}/bootstrap.ts`,
-        bootstrapTemplate(),
-    );
+  writeFileSync(
+    `${cwd()}${appConfig.routerPath}/route-getters.ts`,
+    routeGettersTemplate,
+  );
+  writeFileSync(
+    `${cwd()}${appConfig.routerPath}/bootstrap.ts`,
+    bootstrapTemplate(),
+  );
 };
 
 const commands: { [key: string]: () => void } = {
-    "init": () => {
-        generateTemplateFiles();
-    },
-    "build": async () => {
-        generateTemplateFiles();
-        await generateRouteFiles();
-        if (!appConfig.useVite) return;
-        await build(appConfig.vite);
-    },
-    "start": () => {
-        const start = new Deno.Command("deno", {
-            args: `run -A ${cwd()}${appConfig.routerPath}/bootstrap.ts`
-                .split(" "),
-        });
-        start.spawn();
-    },
-    "dev": async () => {
-        generateTemplateFiles();
+  "init": () => {
+    generateTemplateFiles();
+  },
+  "build": async () => {
+    generateTemplateFiles();
+    await generateRouteFiles();
+    if (!appConfig.useVite) return;
+    await build(appConfig.vite);
+  },
+  "start": () => {
+    const start = new Deno.Command("deno", {
+      args: `run -A ${cwd()}${appConfig.routerPath}/bootstrap.ts`
+        .split(" "),
+    });
+    start.spawn();
+  },
+  "dev": async () => {
+    generateTemplateFiles();
 
-        const dev = new Deno.Command("deno", {
-            args:
-                `run -A --watch --watch-exclude=${appConfig.routerPath} ${cwd()}${appConfig.routerPath}/bootstrap.ts`
-                    .split(" "),
-        });
+    const dev = new Deno.Command("deno", {
+      args:
+        `run -A --watch --watch-exclude=${appConfig.routerPath} ${cwd()}${appConfig.routerPath}/bootstrap.ts`
+          .split(" "),
+    });
 
-        dev.spawn();
-        if (appConfig.useVite) await viteDevServer(appConfig.vite);
-    },
+    dev.spawn();
+    if (appConfig.useVite) await viteDevServer(appConfig.vite);
+  },
 };
 
 commands[command]?.();

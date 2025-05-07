@@ -21,8 +21,8 @@ export default {
   resourcesPath: "/resources",
   // Set it to false for production. Needs build
   viteDevMode: true,
-} satisfies Config;
-`.trimStart();
+} satisfies Config;`
+  .trimStart();
 
 export const routesTypesTemplate = `
 /**
@@ -32,7 +32,7 @@ export const routesTypesTemplate = `
 
 export type Routes = @routeTypes
 export type Actions = @actionTypes`
-    .trimStart();
+  .trimStart();
 
 export const routerTemplate = `
 /**
@@ -43,7 +43,7 @@ export const routerTemplate = `
 export const webRouter = (app) => {
 @routes
 };`
-    .trimStart();
+  .trimStart();
 
 export const routeTemplate = `
 app.on(["GET", "POST"], @route, async (ctx) => {
@@ -61,4 +61,4 @@ app.on(["GET", "POST"], @route, async (ctx) => {
     return ctx.html(defaultExport?.(ctx));
   }
 });`
-    .trimStart();
+  .trimStart();

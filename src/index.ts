@@ -165,3 +165,4 @@ export const createRouter = async (
 };
 
 export { ViteHead } from "./ViteHead.tsx";
+export type { Config };
