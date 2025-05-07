@@ -27,6 +27,7 @@
   ],
   "devDependencies": {
     "@changesets/cli": "^2.29.3",
+    "@types/deno": "^2.3.0",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
   },
