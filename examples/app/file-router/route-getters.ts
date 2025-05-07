@@ -1,5 +1,6 @@
-import { actions, namedRoutes } from "@timberstack/hwr";
-import type { Actions, Routes } from "./routes.d.ts";
+
+import { namedRoutes, actions } from '@timberstack/hwr'
+import type { Actions, Routes } from './routes.d.ts';
 
 export const route = (routeName: Routes, params = {}): string => {
   let foundRoute = namedRoutes[routeName];
@@ -7,7 +8,7 @@ export const route = (routeName: Routes, params = {}): string => {
   Object.entries(params).forEach(([key, value]) => {
     foundRoute = foundRoute.replace(":" + key, value as string);
   });
-  return foundRoute ?? "not-found";
+  return foundRoute ?? 'not-found';
 };
 
 export const action = (
@@ -19,5 +20,5 @@ export const action = (
   Object.entries(params).forEach(([key, value]) => {
     foundAction = foundAction.replace(":" + key, value as string);
   });
-  return foundAction ?? "not-found";
+  return foundAction ?? 'not-found';
 };

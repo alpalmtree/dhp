@@ -11,7 +11,7 @@ export const ViteHead: FC<{ script?: string }> = ({ script }) => {
       html`
         ${raw(scriptsString)}
       `;
-    // deno-lint-ignore jsx-no-useless-fragment
+
     return (
       <>
         <Head />

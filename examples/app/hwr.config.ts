@@ -11,7 +11,7 @@ export default {
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
   // Change it to true if you want to use the generated router file. Needs build
-  precompile: false,
+  precompile: true,
   // Folder where the generated files will live
   routerPath: "/file-router",
   // You can opt out from vite by setting this to false
@@ -19,5 +19,5 @@ export default {
   // Entry points for vite build
   resourcesPath: "/resources",
   // Set it to false for production. Needs build
-  viteDevMode: true,
+  viteDevMode: false,
 } satisfies Config;

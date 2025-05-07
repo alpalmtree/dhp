@@ -9,6 +9,10 @@
     "build": "deno run -A scripts/build.ts",
     "publish:test": "rm -rf /dist && deno run build && deno run version:test && deno run release:test "
   },
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "hono/jsx"
+  },
   "nodeModulesDir": "auto",
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
