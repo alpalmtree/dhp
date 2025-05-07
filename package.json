@@ -10,9 +10,6 @@
     "hwr": "dist/cli.js"
   },
   "scripts": {
-    "test": "vitest",
-    "fmt": "biome format --write",
-    "lint": "biome lint",
     "cs": "changeset",
     "version": "changeset version",
     "version:test": "changeset version --snapshot charmander",
@@ -33,11 +30,12 @@
     "@timberstack/vite-plugin-better-manifest": "^0.0.2",
     "@types/deno": "^2.3.0",
     "@types/node": "^22.15.3",
+    "expect": "link:jsr:@std/expect",
     "hono": "^4.7.8",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.4",
-    "vitest": "^3.0.9"
+    "vitest": "^3.1.2"
   },
   "files": [
     "dist/",
@@ -46,9 +44,9 @@
   "publishConfig": {
     "access": "public"
   },
-  "packageManager": "pnpm@9.0.6+sha1.648f6014eb363abb36618f2ba59282a9eeb3e879",
   "peerDependencies": {
     "hono": "^4.7.8",
     "vite": "^6.3.4"
-  }
+  },
+  "packageManager": "pnpm@9.0.6+sha1.648f6014eb363abb36618f2ba59282a9eeb3e879"
 }

@@ -6,10 +6,17 @@ export const ViteHead: FC<{ script?: string }> = ({ script }) => {
   if (!script) return null;
 
   if (appConfig.viteDevMode === false) {
-    const scriptsString = viteScripts[script]
-    const Head = () => html`${raw(scriptsString)}`
+    const scriptsString = viteScripts[script];
+    const Head = () =>
+      html`
+        ${raw(scriptsString)}
+      `;
     // deno-lint-ignore jsx-no-useless-fragment
-    return <><Head /></>
+    return (
+      <>
+        <Head />
+      </>
+    );
   }
 
   const ViteClient: FC = () => (
