@@ -4,10 +4,10 @@
     "cs": "changeset",
     "version": "changeset version",
     "version:test": "changeset version --snapshot charmander",
-    "release": "pnpm run build && changeset publish",
+    "release": "deno run build && changeset publish",
     "release:test": "changeset publish --no-git-tag --tag charmander",
     "build": "deno run -A scripts/build.ts",
-    "publish:test": "rm -rf /dist && pnpm run build && pnpm run version:test && pnpm run release:test "
+    "publish:test": "rm -rf /dist && deno run build && deno run version:test && deno run release:test "
   },
   "nodeModulesDir": "auto",
   "imports": {
