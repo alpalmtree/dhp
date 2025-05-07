@@ -1,5 +1,11 @@
 # @timberstack/hwr
 
+## 0.0.3
+
+### Patch Changes
+
+- ce35869: Add tests and draft refactor
+
 ## 0.0.2
 
 ### Patch Changes
