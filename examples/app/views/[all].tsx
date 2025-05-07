@@ -1,3 +1,3 @@
-export default function() {
-    return <h1>Not found!</h1>
+export default function () {
+  return <h1>Not found!</h1>;
 }

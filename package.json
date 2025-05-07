@@ -9,15 +9,6 @@
   "bin": {
     "hwr": "dist/cli.js"
   },
-  "scripts": {
-    "cs": "changeset",
-    "version": "changeset version",
-    "version:test": "changeset version --snapshot charmander",
-    "release": "pnpm run build && changeset publish",
-    "release:test": "changeset publish --no-git-tag --tag charmander",
-    "build": "tsup ./src/index.ts ./src/cli.ts ./src/ViteHead.tsx --format esm --dts",
-    "publish:test": "rm -rf /dist && pnpm run build && pnpm run version:test && pnpm run release:test "
-  },
   "keywords": [
     "php",
     "file-based-routing",
@@ -25,28 +16,20 @@
   ],
   "author": "Álvaro Palma Mancheño",
   "license": "MIT",
-  "devDependencies": {
-    "@changesets/cli": "^2.28.1",
+  "dependencies": {
     "@timberstack/vite-plugin-better-manifest": "^0.0.2",
-    "@types/deno": "^2.3.0",
-    "@types/node": "^22.15.3",
-    "expect": "link:jsr:@std/expect",
     "hono": "^4.7.8",
-    "tsup": "^8.4.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.4",
-    "vitest": "^3.1.2"
+    "vite": "^6.3.5"
   },
   "files": [
     "dist/",
     "README.md"
   ],
+  "devDependencies": {
+    "@changesets/cli": "^2.29.3",
+    "tsup": "^8.4.0"
+  },
   "publishConfig": {
     "access": "public"
-  },
-  "peerDependencies": {
-    "hono": "^4.7.8",
-    "vite": "^6.3.4"
-  },
-  "packageManager": "pnpm@9.0.6+sha1.648f6014eb363abb36618f2ba59282a9eeb3e879"
+  }
 }

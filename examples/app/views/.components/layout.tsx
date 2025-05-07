@@ -3,18 +3,16 @@ import { route } from "../../file-router/route-getters.ts";
 import { ViteHead } from "@timberstack/hwr";
 
 type LayoutProps = {
-    script?: string
-    children: unknown,
-    pageTitle?: string,
-    page?: string
-}
+  script?: string;
+  children: unknown;
+  pageTitle?: string;
+  page?: string;
+};
 
 export const Layout: FC<LayoutProps> = (
   { script = "", children, pageTitle = "Untitled", page = "" },
 ) => {
-
   return (
-  
     <>
       {"<!DOCTYPE html>"}
       <html lang="en">
@@ -25,7 +23,7 @@ export const Layout: FC<LayoutProps> = (
             content="width=device-width, initial-scale=1.0"
           />
           <title>{pageTitle}</title>
-          <ViteHead script={script}/>
+          <ViteHead script={script} />
         </head>
         <body>
           <header>

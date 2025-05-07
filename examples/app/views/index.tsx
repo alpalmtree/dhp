@@ -16,7 +16,8 @@ export default function Index({ user = "" }) {
       <h1>
         Index page {route("about")} {user}{" "}
         <a href={action("createUser")}>go to action</a>{" "}
-        <a href={route("dynamic", { username: "al" })}>Dynamic route</a>{" "}
+        <a href={route("dynamic", { username: "al" })}>Dynamic route</a>
+        {" "}
       </h1>
     </Layout>
   );

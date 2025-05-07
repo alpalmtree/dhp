@@ -15,7 +15,7 @@ export default {
   // Folder where the generated files will live
   routerPath: "/file-router",
   // You can opt out from vite by setting this to false
-  useVite: false,
+  useVite: true,
   // Entry points for vite build
   resourcesPath: "/resources",
   // Set it to false for production. Needs build
