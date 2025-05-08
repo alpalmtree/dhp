@@ -13,12 +13,8 @@
   "nodeModulesDir": "auto",
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.15",
-    "@timberstack/hwr": "../../src/index.ts",
-    "@timberstack/vite-plugin-better-manifest": "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
+    "@timberstack/hwr": "../../dist/index.js",
     "hono": "npm:hono@^4.7.8",
-    "vite": "npm:vite@^6.3.4",
-    "vitest": "npm:vitest@^3.1.3",
-    "@lib/config": "../../src/config.ts",
-    "@lib/templates": "../../src/templates.ts"
+    "vite": "npm:vite@^6.3.4"
   }
 }
