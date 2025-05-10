@@ -1003,6 +1003,11 @@
       "jsr:@std/expect@^1.0.15",
       "jsr:@std/fs@^1.0.17"
     ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@changesets/cli@^2.29.3"
+      ]
+    },
     "members": {
       "examples/app": {
         "dependencies": [
@@ -1019,7 +1024,6 @@
         ],
         "packageJson": {
           "dependencies": [
-            "npm:@changesets/cli@^2.29.3",
             "npm:hono@^4.7.8"
           ]
         }
