@@ -1,3 +1,6 @@
 {
-    "workspaces": ["lib"]
+    "workspaces": ["lib"],
+    "devDependencies": {
+        "@changesets/cli": "^2.29.3"
+    }
 }
