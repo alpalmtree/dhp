@@ -4,7 +4,7 @@ export const defaultConfigTemplate = `
  * It is an exact copy of the default config used by HWR.
  * Feel free to remove the options that you don't need.
 */
-import { Config } from "@timberstack/hwr";
+import { Config } from "@timberstack/dhp";
 
 export default {
   // Folder to be used as root for the router

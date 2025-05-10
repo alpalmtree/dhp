@@ -1,59 +1,14 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@std/assert@1": "1.0.13",
-    "jsr:@std/assert@^1.0.12": "1.0.13",
-    "jsr:@std/cli@^1.0.17": "1.0.17",
-    "jsr:@std/expect@^1.0.15": "1.0.15",
-    "jsr:@std/fs@^1.0.17": "1.0.17",
-    "jsr:@std/html@*": "1.0.3",
-    "jsr:@std/internal@^1.0.6": "1.0.6",
-    "jsr:@std/path@^1.0.9": "1.0.9",
     "npm:@changesets/cli@^2.29.3": "2.29.3",
     "npm:@timberstack/vite-plugin-better-manifest@^0.0.2": "0.0.2_vite@6.3.5__picomatch@4.0.2_@types+node@22.12.0",
     "npm:@types/deno@^2.3.0": "2.3.0",
     "npm:@types/node@*": "22.12.0",
     "npm:hono@^4.7.8": "4.7.9",
-    "npm:hono@^4.7.9": "4.7.9",
-    "npm:preact-render-to-string@^6.5.13": "6.5.13_preact@10.26.6",
-    "npm:preact@^10.26.6": "10.26.6",
     "npm:tsup@^8.4.0": "8.4.0_typescript@5.8.3_esbuild@0.25.4",
     "npm:typescript@^5.8.3": "5.8.3",
-    "npm:vhtml@^2.2.0": "2.2.0",
-    "npm:vite@*": "6.3.5_picomatch@4.0.2_@types+node@22.12.0"
-  },
-  "jsr": {
-    "@std/assert@1.0.13": {
-      "integrity": "ae0d31e41919b12c656c742b22522c32fb26ed0cba32975cb0de2a273cb68b29",
-      "dependencies": [
-        "jsr:@std/internal"
-      ]
-    },
-    "@std/cli@1.0.17": {
-      "integrity": "e15b9abe629e17be90cc6216327f03a29eae613365f1353837fa749aad29ce7b"
-    },
-    "@std/expect@1.0.15": {
-      "integrity": "eca360007b5a7f13dbfa1294224baee7fb98dcd460d8461fe64eeae302902945",
-      "dependencies": [
-        "jsr:@std/assert@^1.0.12",
-        "jsr:@std/internal"
-      ]
-    },
-    "@std/fs@1.0.17": {
-      "integrity": "1c00c632677c1158988ef7a004cb16137f870aafdb8163b9dce86ec652f3952b",
-      "dependencies": [
-        "jsr:@std/path"
-      ]
-    },
-    "@std/html@1.0.3": {
-      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
-    },
-    "@std/internal@1.0.6": {
-      "integrity": "9533b128f230f73bd209408bb07a4b12f8d4255ab2a4d22a1fd6d87304aca9a4"
-    },
-    "@std/path@1.0.9": {
-      "integrity": "260a49f11edd3db93dd38350bf9cd1b4d1366afa98e81b86167b4e3dd750129e"
-    }
+    "npm:vite@^6.3.5": "6.3.5_picomatch@4.0.2_@types+node@22.12.0"
   },
   "npm": {
     "@babel/runtime@7.27.1": {
@@ -1051,15 +1006,6 @@
         "source-map-js"
       ]
     },
-    "preact-render-to-string@6.5.13_preact@10.26.6": {
-      "integrity": "sha512-iGPd+hKPMFKsfpR2vL4kJ6ZPcFIoWZEcBf0Dpm3zOpdVvj77aY8RlLiQji5OMrngEyaxGogeakTb54uS2FvA6w==",
-      "dependencies": [
-        "preact"
-      ]
-    },
-    "preact@10.26.6": {
-      "integrity": "sha512-5SRRBinwpwkaD+OqlBDeITlRgvd8I8QlxHJw9AxSdMNV6O+LodN9nUyYGpSF7sadHjs6RzeFShMexC6DbtWr9g=="
-    },
     "prettier@2.8.8": {
       "integrity": "sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==",
       "bin": true
@@ -1298,9 +1244,6 @@
     "universalify@0.1.2": {
       "integrity": "sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg=="
     },
-    "vhtml@2.2.0": {
-      "integrity": "sha512-TPXrXrxBOslRUVnlVkiAqhoXneiertIg86bdvzionrUYhEuiROvyPZNiiP6GIIJ2Q7oPNVyEtIx8gMAZZE9lCQ=="
-    },
     "vite@6.3.5_picomatch@4.0.2": {
       "integrity": "sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==",
       "dependencies": [
@@ -1375,9 +1318,7 @@
       "jsr:@std/assert@1",
       "jsr:@std/cli@^1.0.17",
       "jsr:@std/expect@^1.0.15",
-      "jsr:@std/fs@^1.0.17",
-      "npm:hono@^4.7.9",
-      "npm:tsup@^8.4.0"
+      "jsr:@std/fs@^1.0.17"
     ],
     "packageJson": {
       "dependencies": [
@@ -1385,53 +1326,10 @@
         "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
         "npm:@types/deno@^2.3.0",
         "npm:hono@^4.7.8",
-        "npm:preact-render-to-string@^6.5.13",
-        "npm:preact@^10.26.6",
         "npm:tsup@^8.4.0",
         "npm:typescript@^5.8.3",
-        "npm:vhtml@^2.2.0"
+        "npm:vite@^6.3.5"
       ]
-    },
-    "members": {
-      "__tests__/test_apps/default_config": {
-        "dependencies": [
-          "jsr:@std/expect@^1.0.15",
-          "npm:@timberstack/dhp@*",
-          "npm:hono@^4.7.8"
-        ]
-      },
-      "__tests__/test_apps/user_config": {
-        "dependencies": [
-          "jsr:@std/expect@^1.0.15",
-          "npm:@timberstack/dhp@*",
-          "npm:hono@^4.7.8"
-        ]
-      },
-      "examples/app": {
-        "dependencies": [
-          "jsr:@std/expect@^1.0.15",
-          "npm:@timberstack/dhp@*",
-          "npm:hono@^4.7.8"
-        ]
-      },
-      "lib": {
-        "dependencies": [
-          "jsr:@std/assert@1",
-          "jsr:@std/cli@^1.0.17",
-          "jsr:@std/expect@^1.0.15",
-          "jsr:@std/fs@^1.0.17"
-        ],
-        "packageJson": {
-          "dependencies": [
-            "npm:@changesets/cli@^2.29.3",
-            "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
-            "npm:@types/deno@^2.3.0",
-            "npm:hono@^4.7.8",
-            "npm:tsup@^8.4.0",
-            "npm:typescript@^5.8.3"
-          ]
-        }
-      }
     }
   }
 }

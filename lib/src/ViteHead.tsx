@@ -1,28 +1,19 @@
-import type { FC } from "hono/jsx";
-import { html, raw } from "hono/html";
 import { appConfig, viteScripts } from "./index.ts";
+import { raw, html } from "hono/html"
 
-export const ViteHead: FC<{ script?: string }> = ({ script }) => {
+export const ViteHead = ({ script }: { script: string}) => {
   if (!script) return null;
 
   if (appConfig.viteDevMode === false) {
     const scriptsString = viteScripts[script];
-    const Head = () =>
-      html`
-        ${raw(scriptsString)}
-      `;
-
-    return (
-      <>
-        <Head />
-      </>
-    );
+    const Head = () => html`${raw(scriptsString)}`
+    return <Head />;
   }
 
-  const ViteClient: FC = () => (
+  const ViteClient = () => (
     <script type="module" src="http://localhost:5173/@vite/client"></script>
   );
-  const ViteScript: FC = () => (
+  const ViteScript = () => (
     <script
       type="module"
       src={`http://localhost:5173${script}`}

@@ -5,7 +5,7 @@
  */
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import { createRouter } from "@timberstack/hwr";
+import { createRouter } from "@timberstack/dhp";
 
 
 const app = new Hono();

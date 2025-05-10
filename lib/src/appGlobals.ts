@@ -1,6 +1,6 @@
 import { cwd } from "node:process";
 import { existsSync, readFileSync } from "node:fs";
-import { Context, Hono } from "hono";
+import { Context, Hono } from "./vendor/hono.ts";
 
 import { Config } from "./config.ts";
 import { getViteScripts } from "./viteSetup.ts";

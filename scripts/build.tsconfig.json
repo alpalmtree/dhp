@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "types": ["deno"],
-    "target": "ES2024",
+    "target": "esnext",
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
+    "jsxImportSource": "preact",
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,

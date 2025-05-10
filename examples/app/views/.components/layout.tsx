@@ -1,6 +1,5 @@
-import type { FC } from "hono/jsx";
 import { route } from "../../file-router/route-getters.ts";
-import { ViteHead } from "@timberstack/hwr";
+import { ViteHead } from "@timberstack/dhp";
 
 type LayoutProps = {
   script?: string;
@@ -9,8 +8,8 @@ type LayoutProps = {
   page?: string;
 };
 
-export const Layout: FC<LayoutProps> = (
-  { script = "", children, pageTitle = "Untitled", page = "" },
+export const Layout = (
+  { script = "", children, pageTitle = "Untitled", page = "" }: LayoutProps,
 ) => {
   return (
     <>

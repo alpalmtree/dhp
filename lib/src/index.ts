@@ -2,7 +2,7 @@ import { existsSync, mkdirSync } from "node:fs";
 
 import type { PathLike } from "node:fs";
 import { cwd } from "node:process";
-import type { Hono } from "hono";
+import type { Hono } from "./vendor/hono.ts";
 
 import { Config, getConfig } from "./config.ts";
 import { viteSetup } from "./viteSetup.ts";
@@ -57,3 +57,4 @@ export const createRouter = async (
 export const { namedRoutes, actions, viteScripts } = appGlobals;
 export { ViteHead } from "./ViteHead.tsx";
 export type { Config };
+export { render } from "preact-render-to-string";

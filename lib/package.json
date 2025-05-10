@@ -1,0 +1,51 @@
+{
+    "name": "@timberstack/dhp",
+    "version": "0.0.1",
+    "description": "A vanilla PHP-like experience for javascript",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "bin": {
+      "dhp": "./dist/cli.js"
+    },
+    "exports": {
+      ".": {
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      },
+      "./cli": {
+        "import": "./dist/cli.js",
+        "types": "./dist/cli.d.ts"
+      },
+      "./preact/jsx-runtime": {
+        "import": "./dist/vendor/preact.js",
+        "types:": "./dist/vendor/preact.d.ts"
+      }
+    },
+    "keywords": [
+      "php",
+      "file-based-routing",
+      "server side rendering"
+    ],
+    "author": "Álvaro Palma Mancheño",
+    "license": "MIT",
+    "dependencies": {
+      "@timberstack/vite-plugin-better-manifest": "^0.0.2",
+      "hono": "^4.7.8"
+    },
+    "files": [
+      "dist/",
+      "README.md"
+    ],
+    "devDependencies": {
+      "@changesets/cli": "^2.29.3",
+      "@types/deno": "^2.3.0",
+      "tsup": "^8.4.0",
+      "typescript": "^5.8.3"
+    },
+    "publishConfig": {
+      "access": "public"
+    }
+  }
+  

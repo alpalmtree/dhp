@@ -1,4 +1,4 @@
-import { actions, namedRoutes } from "@timberstack/hwr";
+import { actions, namedRoutes } from "@timberstack/dhp";
 import type { Actions, Routes } from "./routes.d.ts";
 
 export const route = (routeName: Routes, params = {}): string => {

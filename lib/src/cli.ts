@@ -1,7 +1,8 @@
 import { appConfig, generateRouteFiles } from "./index.ts";
 import { argv, cwd } from "node:process";
 import { writeFileSync } from "node:fs";
-import { build, createServer, UserConfig } from "vite";
+// @ts-ignore we won't bundle
+import { build, createServer, UserConfig } from "npm:vite";
 
 export const viteDevServer = async (config: UserConfig = {}) => {
   const server = await createServer(config);
@@ -26,7 +27,7 @@ const bootstrapTemplate = () => `
  */
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import { createRouter } from "@timberstack/hwr";
+import { createRouter } from "@timberstack/dhp";
 
 
 const app = new Hono();
@@ -37,7 +38,7 @@ app.use("*", serveStatic({ root: ".${appConfig.publicDir}" }));
 Deno.serve(app.fetch);`;
 
 const routeGettersTemplate = `
-import { namedRoutes, actions } from '@timberstack/hwr'
+import { namedRoutes, actions } from '@timberstack/dhp'
 import type { Actions, Routes } from './routes.d.ts';
 
 export const route = (routeName: Routes, params = {}): string => {

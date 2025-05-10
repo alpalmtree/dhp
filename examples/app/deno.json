@@ -1,20 +1,17 @@
 {
   "tasks": {
-    "dev": "deno run -A ../../src/cli.ts dev",
-    "start": "deno run -A ../../src/cli.ts start",
-    "build": "deno run -A ../../src/cli.ts build",
-    "init": "deno run -A ../../src/cli.ts init",
-    "test": "deno run -A __tests__/fixture/test_start.ts && deno test -A __tests__/ && deno run -A __tests__/fixture/test_end.ts"
+    "dev": "deno run -A cli.ts dev",
+    "start": "deno run -A cli.ts start",
+    "build": "deno run -A cli.ts build",
+    "init": "deno run -A cli.ts init"
   },
   "compilerOptions": {
     "jsx": "precompile",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": ""
   },
-  "nodeModulesDir": "auto",
   "imports": {
     "@std/expect": "jsr:@std/expect@^1.0.15",
-    "@timberstack/hwr": "../../dist/index.js",
-    "hono": "npm:hono@^4.7.8",
-    "vite": "npm:vite@^6.3.4"
+    "@timberstack/dhp": "npm:@timberstack/dhp",
+    "hono": "npm:hono@^4.7.8"
   }
 }

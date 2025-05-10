@@ -9,15 +9,12 @@
     "jsx": "precompile",
     "jsxImportSource": "hono/jsx"
   },
-  "nodeModulesDir": "auto",
   "imports": {
-    "_somehow_needed": "npm:@timberstack/hwr",
     "@std/expect": "jsr:@std/expect@^1.0.15",
-    "@timberstack/hwr": "../../../src/index.ts",
-    "@timberstack/vite-plugin-better-manifest": "npm:@timberstack/vite-plugin-better-manifest@^0.0.2",
+    "@timberstack/dhp": "npm:@timberstack/dhp",
     "hono": "npm:hono@^4.7.8",
     "vite": "npm:vite@^6.3.4",
-    "@lib/config": "../../../src/config.ts",
-    "@lib/templates": "../../../src/templates.ts"
+    "@lib/config": "../../../lib/src/config.ts",
+    "@lib/templates": "../../../lib/src/templates.ts"
   }
 }
