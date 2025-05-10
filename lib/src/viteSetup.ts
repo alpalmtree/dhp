@@ -1,10 +1,10 @@
 import { cwd } from "node:process";
 import { existsSync, readFileSync } from "node:fs";
-import { Config } from "./config.ts";
+import type { Config } from "./config.ts";
 
 export const viteSetup = async (appConfig: Config) => {
   const { default: BetterManifest } = await import(
-    "@timberstack/vite-plugin-better-manifest"
+    "npm:@timberstack/vite-plugin-better-manifest"
   );
 
   const manifestPlugin = () =>

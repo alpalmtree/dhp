@@ -1,29 +1,21 @@
 {
-    "workspace": {
-      "members": ["./__tests__/**", "./examples/**", "./lib"]
-    },
-    "tasks": {
-      "test": "deno test -A __tests__/tests",
-      "cs": "changeset",
-      "version": "changeset version",
-      "version:test": "changeset version --snapshot charmander",
-      "release": "deno run build && changeset publish",
-      "release:test": "changeset publish --no-git-tag --tag charmander",
-      "build": "deno run -A scripts/build.ts",
-      "publish:test": "rm -rf /dist && deno run build && deno run version:test && deno run release:test "
-    },
-    "compilerOptions": {
-      "jsx": "precompile",
-      "jsxImportSource": "hono/jsx"
-    },
-    "nodeModulesDir": "auto",
-    "imports": {
-      "@std/assert": "jsr:@std/assert@1",
-      "@std/cli": "jsr:@std/cli@^1.0.17",
-      "@std/expect": "jsr:@std/expect@^1.0.15",
-      "@std/fs": "jsr:@std/fs@^1.0.17",
-      "hono": "npm:hono@^4.7.9",
-      "tsup": "npm:tsup@^8.4.0"
-    }
+  "workspace": {
+    "members": ["./examples/**", "lib"]
+  },
+  "tasks": {
+    "test": "deno test -A __tests__/tests",
+    "cs": "changeset",
+    "version": "changeset version",
+    "version:test": "changeset version --snapshot charmander",
+    "release": "changeset publish",
+    "release:test": "changeset publish --no-git-tag --tag charmander",
+    "publish:test": "deno run version:test && deno run release:test "
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/cli": "jsr:@std/cli@^1.0.17",
+    "@std/expect": "jsr:@std/expect@^1.0.15",
+    "@std/fs": "jsr:@std/fs@^1.0.17"
   }
-  
+}

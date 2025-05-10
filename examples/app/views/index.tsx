@@ -1,13 +1,12 @@
 import { action, route } from "../file-router/route-getters.ts";
-import type { Context } from "hono";
+import type { Context } from "@timberstack/dhp/hono";
 import { Layout } from "./.components/layout.tsx";
-import { render } from "@timberstack/dhp"
 
 export const name = "index";
 
 export const actions = {
   createUser: (ctx: Context) => {
-    return ctx.html(render(<Index user="Working" />));
+    return ctx.html(<Index user="Working" />);
   },
 };
 

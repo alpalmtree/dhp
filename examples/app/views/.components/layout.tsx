@@ -1,5 +1,5 @@
 import { route } from "../../file-router/route-getters.ts";
-import { ViteHead } from "@timberstack/dhp";
+import { ViteHead } from "@timberstack/dhp/vite";
 
 type LayoutProps = {
   script?: string;

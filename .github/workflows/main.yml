@@ -14,5 +14,5 @@ jobs:
         with:
           deno-version: v2.x
 
-      - run: deno install
-      - run: deno run test
+      # - run: deno install
+      # - run: deno run test

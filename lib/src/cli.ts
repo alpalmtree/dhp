@@ -1,8 +1,7 @@
 import { appConfig, generateRouteFiles } from "./index.ts";
 import { argv, cwd } from "node:process";
 import { writeFileSync } from "node:fs";
-// @ts-ignore we won't bundle
-import { build, createServer, UserConfig } from "npm:vite";
+import { build, createServer, type UserConfig } from "npm:vite@6.3.5";
 
 export const viteDevServer = async (config: UserConfig = {}) => {
   const server = await createServer(config);
@@ -25,8 +24,7 @@ const bootstrapTemplate = () => `
  * CAUTION: This file will be re-generated whenever you start the dev server.
  * If you want to edit anything, use a hwr.config.ts file or export your middleware
  */
-import { Hono } from "hono";
-import { serveStatic } from "hono/deno";
+import { Hono, serveStatic } from "@timberstack/dhp/hono";
 import { createRouter } from "@timberstack/dhp";
 
 

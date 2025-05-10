@@ -1,6 +1,6 @@
 import { cwd } from "node:process";
 import { existsSync, readdirSync } from "node:fs";
-import { Config } from "./config.ts";
+import type { Config } from "./config.ts";
 
 const isFile = (path: string) => path.includes(".");
 

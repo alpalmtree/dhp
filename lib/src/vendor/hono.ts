@@ -1,4 +1,3 @@
-export * from "hono";
-export * from "hono/jsx/jsx-runtime";
-export * from "hono/html";
-export * from "hono/deno";
+export * from "npm:hono";
+export * from "npm:hono/jsx/jsx-runtime";
+export * from "npm:hono/deno";

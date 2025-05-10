@@ -1,9 +1,9 @@
 import { writeFileSync } from "node:fs";
 import { cwd } from "node:process";
 
-import { AppGlobals } from "./appGlobals.ts";
+import type { AppGlobals } from "./appGlobals.ts";
 import { routerTemplate, routesTypesTemplate } from "./templates.ts";
-import { Config } from "./config.ts";
+import type { Config } from "./config.ts";
 
 export const writeTypesFiles = (appGlobals: AppGlobals, appConfig: Config) => {
   const fileRouterPath: string = `${cwd()}${appConfig.routerPath}`;

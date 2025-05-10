@@ -1,8 +1,9 @@
-import { cwd } from "node:process";
 import { existsSync, readFileSync } from "node:fs";
-import { Context, Hono } from "./vendor/hono.ts";
+import type { Context, Hono } from "./vendor/hono.ts";
 
-import { Config } from "./config.ts";
+const { cwd } = Deno;
+
+import type { Config } from "./config.ts";
 import { getViteScripts } from "./viteSetup.ts";
 import { getPaths, transformPath } from "./paths.ts";
 import { routeTemplate } from "./templates.ts";
