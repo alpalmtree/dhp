@@ -1,6 +1,14 @@
 {
-    "workspaces": ["lib"],
-    "devDependencies": {
-        "@changesets/cli": "^2.29.3"
-    }
+  "workspaces": ["lib"],
+  "scripts": {
+    "test": "deno test -A __tests__/tests",
+    "cs": "changeset",
+    "version": "changeset version",
+    "version:test": "changeset version --snapshot charmander",
+    "release": "changeset publish",
+    "release:test": "changeset publish --no-git-tag --tag charmander"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.3"
+  }
 }

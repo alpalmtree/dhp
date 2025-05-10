@@ -2,15 +2,6 @@
   "workspace": {
     "members": ["./examples/**", "lib"]
   },
-  "tasks": {
-    "test": "deno test -A __tests__/tests",
-    "cs": "changeset",
-    "version": "changeset version",
-    "version:test": "changeset version --snapshot charmander",
-    "release": "changeset publish",
-    "release:test": "changeset publish --no-git-tag --tag charmander",
-    "publish:test": "deno run version:test && deno run release:test "
-  },
   "nodeModulesDir": "auto",
   "imports": {
     "@std/assert": "jsr:@std/assert@1",

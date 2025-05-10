@@ -1,6 +1,6 @@
 {
   "name": "@timberstack/dhp",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Deno PHP - A vanilla PHP-like experience for javascript",
   "type": "module",
   "main": "./src/index.ts",
