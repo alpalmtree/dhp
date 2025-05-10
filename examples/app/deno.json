@@ -7,11 +7,9 @@
   },
   "compilerOptions": {
     "jsx": "precompile",
-    "jsxImportSource": ""
+    "jsxImportSource": "@timberstack/dhp"
   },
   "imports": {
-    "@std/expect": "jsr:@std/expect@^1.0.15",
-    "@timberstack/dhp": "npm:@timberstack/dhp",
-    "hono": "npm:hono@^4.7.8"
+    "@timberstack/dhp": "npm:@timberstack/dhp"
   }
 }

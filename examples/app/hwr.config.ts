@@ -3,7 +3,7 @@
  * It is an exact copy of the default config used by HWR.
  * Feel free to remove the options that you don't need.
  */
-import { Config } from "@timberstack/dhp";
+import type { Config } from "@timberstack/dhp";
 
 export default {
   // Folder to be used as root for the router
@@ -11,7 +11,7 @@ export default {
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
   // Change it to true if you want to use the generated router file. Needs build
-  precompile: false,
+  precompile: true,
   // Folder where the generated files will live
   routerPath: "/file-router",
   // You can opt out from vite by setting this to false

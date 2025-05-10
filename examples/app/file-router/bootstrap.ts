@@ -3,8 +3,7 @@
  * CAUTION: This file will be re-generated whenever you start the dev server.
  * If you want to edit anything, use a hwr.config.ts file or export your middleware
  */
-import { Hono } from "hono";
-import { serveStatic } from "hono/deno";
+import { Hono, serveStatic } from "@timberstack/dhp/hono";
 import { createRouter } from "@timberstack/dhp";
 
 

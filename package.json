@@ -1,26 +1,3 @@
 {
-    "type": "module",
-    "author": "Álvaro Palma Mancheño",
-    "license": "MIT",
-    "dependencies": {
-      "@timberstack/vite-plugin-better-manifest": "^0.0.2",
-      "hono": "^4.7.8",
-      "preact": "^10.26.6",
-      "preact-render-to-string": "^6.5.13",
-      "vhtml": "^2.2.0"
-    },
-    "files": [
-      "dist/",
-      "README.md"
-    ],
-    "devDependencies": {
-      "@changesets/cli": "^2.29.3",
-      "@types/deno": "^2.3.0",
-      "tsup": "^8.4.0",
-      "typescript": "^5.8.3"
-    },
-    "publishConfig": {
-      "access": "public"
-    }
-  }
-  
+    "workspaces": ["lib"]
+}
