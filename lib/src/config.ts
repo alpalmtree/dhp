@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { cwd } from "node:process";
 
-import type { UserConfig } from "vite";
+import type { UserConfig } from "npm:vite";
 
 import { defaultConfigTemplate } from "./templates.ts";
 

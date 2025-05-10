@@ -1,5 +1,5 @@
 import { appConfig, viteScripts } from "./index.ts";
-import { raw, html } from "hono/html"
+import { raw, html } from "npm:hono/html"
 
 export const ViteHead = ({ script }: { script: string}) => {
   if (!script) return null;

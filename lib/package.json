@@ -1,51 +1,67 @@
 {
-    "name": "@timberstack/dhp",
-    "version": "0.0.1",
-    "description": "A vanilla PHP-like experience for javascript",
-    "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
-    "bin": {
-      "dhp": "./dist/cli.js"
+  "name": "@timberstack/dhp",
+  "version": "0.0.1",
+  "description": "Deno PHP - A vanilla PHP-like experience for javascript",
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "types": "./src/index.ts",
+  "bin": {
+    "dhp": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "deno test -A __tests__/tests",
+    "cs": "changeset",
+    "version": "changeset version",
+    "version:test": "changeset version --snapshot charmander",
+    "release": "changeset publish",
+    "release:test": "changeset publish --no-git-tag --tag charmander",
+    "publish:test": "deno run version:test && deno run release:test"
+  },
+  "keywords": [
+    "php",
+    "file-based-routing",
+    "server side rendering"
+  ],
+  "author": "Álvaro Palma Mancheño",
+  "license": "MIT",
+  "dependencies": {
+    "hono": "^4.7.8"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.3"
+  },
+  "files": [
+    "./src/",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "types": "./src/index.ts"
     },
-    "exports": {
-      ".": {
-        "import": "./dist/index.js",
-        "types": "./dist/index.d.ts"
-      },
-      "./cli": {
-        "import": "./dist/cli.js",
-        "types": "./dist/cli.d.ts"
-      },
-      "./preact/jsx-runtime": {
-        "import": "./dist/vendor/preact.js",
-        "types:": "./dist/vendor/preact.d.ts"
-      }
+    "./jsx": {
+      "import": "./src/vendor/hono.ts",
+      "types": "./src/vendor/hono.ts"
     },
-    "keywords": [
-      "php",
-      "file-based-routing",
-      "server side rendering"
-    ],
-    "author": "Álvaro Palma Mancheño",
-    "license": "MIT",
-    "dependencies": {
-      "@timberstack/vite-plugin-better-manifest": "^0.0.2",
-      "hono": "^4.7.8"
+    "./jsx-runtime": {
+      "import": "./src/vendor/hono.ts",
+      "types": "./src/vendor/hono.ts"
     },
-    "files": [
-      "dist/",
-      "README.md"
-    ],
-    "devDependencies": {
-      "@changesets/cli": "^2.29.3",
-      "@types/deno": "^2.3.0",
-      "tsup": "^8.4.0",
-      "typescript": "^5.8.3"
+    "./vite": {
+      "import": "./src/ViteHead.tsx",
+      "types": "./src/ViteHead.tsx"
     },
-    "publishConfig": {
-      "access": "public"
+    "./cli": {
+      "import": "./src/cli.ts",
+      "types": "./src/cli.ts"
+    },
+    "./hono": {
+      "import": "./src/vendor/hono.ts",
+      "types": "./src/vendor/hono.ts"
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
-  
+}

@@ -4,7 +4,7 @@ import type { PathLike } from "node:fs";
 import { cwd } from "node:process";
 import type { Hono } from "./vendor/hono.ts";
 
-import { Config, getConfig } from "./config.ts";
+import { type Config, getConfig } from "./config.ts";
 import { viteSetup } from "./viteSetup.ts";
 import { getGlobalVariables, populateGlobals } from "./appGlobals.ts";
 import { writeRoutesFile, writeTypesFiles } from "./writeFiles.ts";
@@ -30,7 +30,6 @@ const devRoutes = async (app: Hono) => {
   writeTypesFiles(appGlobals, appConfig);
   routes.forEach((cb) => cb(app));
 };
-console.log("from refactor");
 
 export const generateRouteFiles = async () => {
   const { routesStrings } = await populateGlobals({
@@ -57,4 +56,3 @@ export const createRouter = async (
 export const { namedRoutes, actions, viteScripts } = appGlobals;
 export { ViteHead } from "./ViteHead.tsx";
 export type { Config };
-export { render } from "preact-render-to-string";
