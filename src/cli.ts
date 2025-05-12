@@ -7,7 +7,6 @@
  * @module
  */
 import { build } from "npm:vite@6.3.5";
-import { copy, exists } from "jsr:@std/fs@1.0.x";
 
 import { appConfig } from "./index.ts";
 
@@ -17,25 +16,7 @@ import {
   writeRouteGettersFile,
 } from "./writeFiles.ts";
 
-const baseDenoConfig = {
-  tasks: {
-    dhp: "echo \"import 'dhp/cli.ts'\" | deno run -A -",
-    init: "deno run dhp init",
-    dev: "deno run dhp dev",
-    build: "deno run dhp build",
-    start: "deno run dhp start",
-  },
-  imports: {
-    "dhp/": "https://deno.land/x/dhp/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts",
-  },
-  compilerOptions: {
-    jsx: "precompile",
-    jsxImportSource: "dhp",
-  },
-};
-
-const availableCommands = ["start", "dev", "build", "init", "scaffold"];
+const availableCommands = ["start", "dev", "build", "init"];
 const { cwd } = Deno;
 const command = Deno.args.at(0);
 
@@ -50,26 +31,7 @@ const generateTemplateFiles = (dev = true) => {
   writeConfigFile();
 };
 
-const copyDir = async (name: string) => {
-  if (await exists(`${cwd()}/${name}`)) return;
-  await copy(`./src/scaffold_template/${name}`, `${cwd()}/${name}`);
-};
-
 const commands: { [key: string]: () => void } = {
-  "scaffold": async () => {
-    generateTemplateFiles();
-
-    if (!await exists(`${cwd()}/deno.json`)) {
-      Deno.writeTextFileSync(
-        `${cwd()}/deno.json`,
-        JSON.stringify(baseDenoConfig, null, 2),
-      );
-    }
-
-    await copyDir("resources");
-    await copyDir("views");
-    await copyDir("public");
-  },
   "init": () => {
     generateTemplateFiles();
   },
