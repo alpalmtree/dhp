@@ -1,0 +1,10 @@
+{
+  "lock": false,
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "dhp"
+  },
+  "imports": {
+    "dhp/jsx-runtime": "./src/vendor/ssx.ts"
+  }
+}

@@ -10,7 +10,6 @@ import {
   type AppGlobals,
   getGlobalVariables,
   populateGlobals,
-  type Resolver,
   type RouteImport,
 } from "./appGlobals.ts";
 import { writeTypesFiles } from "./writeFiles.ts";
@@ -39,12 +38,10 @@ if (!existsSync(fileRouterPath)) mkdirSync(fileRouterPath);
 
 const router = async (
   app: Hono,
-  resolver: Resolver<RouteImport>,
 ): Promise<void> => {
   const routes = await populateGlobals({
     appConfig,
     appGlobalsInstance: appGlobals,
-    resolver,
   });
 
   writeTypesFiles(appGlobals, appConfig);
@@ -56,18 +53,16 @@ const router = async (
  * the file-based web router. It returns the runtime config
  * generated after the creation of the router.
  * @param app Hono instance
- * @param resolver Function in a generated file inside your file-router folder
  * @returns
  */
 export const createRouter = async (
   app: Hono,
-  resolver: Resolver<RouteImport>,
 ): Promise<{
   appConfig: Config;
   appGlobals: AppGlobals;
   app: Hono;
 }> => {
-  await router(app, resolver as Resolver<RouteImport>);
+  await router(app);
   if (appConfig.useVite && !appConfig.viteDevMode) {
     await viteDevServer(appConfig);
   }
@@ -99,5 +94,5 @@ const actions = appGlobals.actions;
  */
 const viteScripts = appGlobals.viteScripts;
 
-export type { Config, Resolver, RouteImport };
+export type { Config, RouteImport };
 export { actions, getConfig, namedRoutes, viteScripts };

@@ -43,13 +43,6 @@ export const getGlobalVariables = (appConfig: Config): AppGlobals => {
 };
 
 type Routes = ((app: Hono) => void)[];
-/**
- * Type for the function that will be used in your app's
- * entrypoint for resolving dynamic imports. Currently,
- * JSR doesn't allow dynamically importing from your
- * project's files.
- */
-export type Resolver<T> = (path: string) => Promise<T>;
 
 /**
  * Expected exported variables from your routes.
@@ -63,11 +56,10 @@ export type RouteImport = {
 type PopulateGlobalsProps = {
   appConfig: Config;
   appGlobalsInstance: ReturnType<typeof getGlobalVariables>;
-  resolver: Resolver<RouteImport>;
 };
 
 export const populateGlobals = async (
-  { appConfig, appGlobalsInstance, resolver }: PopulateGlobalsProps,
+  { appConfig, appGlobalsInstance }: PopulateGlobalsProps,
 ): Promise<Routes> => {
   const routes: Routes = [];
 
@@ -76,7 +68,7 @@ export const populateGlobals = async (
 
   for (const path of paths) {
     const exportPath = `${cwd()}${appConfig.viewsDir}/${path}`;
-    const exports = await resolver(exportPath);
+    const exports = await import(exportPath);
     const name = exports.name;
     const exportedActions = exports.actions;
     const renderer = exports.default;

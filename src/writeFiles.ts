@@ -6,7 +6,6 @@ import type { AppGlobals } from "./appGlobals.ts";
 import {
   bootstrapTemplate,
   defaultConfigTemplate,
-  resolverTemplate,
   routeGettersTemplate,
   routesTypesTemplate,
 } from "./templates.ts";
@@ -49,13 +48,6 @@ export const writeRouteGettersFile = (appConfig: Config) => {
   writeFileSync(
     `${cwd()}${appConfig.routerPath}/route-getters.ts`,
     routeGettersTemplate,
-  );
-};
-
-export const writeResolverFile = (appConfig: Config) => {
-  writeFileSync(
-    `${cwd()}${appConfig.routerPath}/resolver.ts`,
-    resolverTemplate,
   );
 };
 

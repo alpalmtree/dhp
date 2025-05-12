@@ -3,7 +3,6 @@ import { existsSync, writeFileSync } from "node:fs";
 import type { UserConfig } from "npm:vite@6.3.5";
 
 import { defaultConfigTemplate } from "./templates.ts";
-import type { Resolver } from "./appGlobals.ts";
 const { cwd } = Deno;
 
 /**
@@ -37,26 +36,21 @@ const defaultConfig: Config = {
 };
 
 /**
- * Function used in your application entrypoint for overwriting
- * the default configuration.
- * @param resolver Function imported from the `resolver.ts` file inside you file-router folder
+ * Function for overwriting the default configuration.
  * @returns
  */
-export const getConfig = async (
-  resolver?: Resolver<{ default: Config }>,
-): Promise<Config> => {
+export const getConfig = async (): Promise<Config> => {
   const inner = structuredClone(defaultConfig);
 
   if (!existsSync(`${cwd()}/dhp.config.ts`)) {
     writeFileSync(`${cwd()}/dhp.config.ts`, defaultConfigTemplate);
   }
-  if (!resolver) return inner;
 
   try {
-    const { default: userConfig } = await resolver(`${cwd()}/dhp.config.ts`);
+    const { default: userConfig } = await import(`${cwd()}/dhp.config.ts`);
     Object.assign(inner, userConfig);
   } catch (_) {
-    console.log(_);
+    console.log("Cannot import files from project root :(");
   }
   return inner;
 };
