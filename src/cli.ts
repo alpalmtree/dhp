@@ -20,10 +20,14 @@ import {
 const baseDenoConfig = {
   tasks: {
     dhp: "echo \"import 'dhp/cli.ts'\" | deno run -A -",
+    init: "deno run dhp init",
+    dev: "deno run dhp dev",
+    build: "deno run dhp build",
+    start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp@v0.0.3/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.3/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts",
   },
   compilerOptions: {
     jsx: "precompile",
