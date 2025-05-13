@@ -1,7 +1,7 @@
 import { fs } from "./src/deps/std.ts";
 const { exists, ensureDir } = fs;
 
-const REMOTE_URL = "https://deno.land/x/denophp/src/scaffold_template"; // always get the latest
+const REMOTE_URL = "https://deno.land/x/dhp/src/scaffold_template"; // always get the latest
 const writeIfNotExists = async (fileRelativePath: string): Promise<void> => {
   const fileExists = await exists(`${Deno.cwd()}${fileRelativePath}`);
   if (fileExists) return new Promise((r) => r());
@@ -28,8 +28,8 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/denophp/",
-    "dhp/jsx-runtime": "https://deno.land/x/denophp/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {
