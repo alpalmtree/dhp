@@ -16,7 +16,13 @@ It assumes 0 config from your side. It does, however, create a `dhp.config.ts`
 file in the root of your project for exposing the most useful config options,
 just in case you need to tweak anything.
 
-Given the following structure:
+## Getting started
+If you're starting from a blank project, you can run the following command *inside your desired root folder*:
+```bash
+deno run -A https://deno.land/x/dhp/scaffold.ts
+```
+
+This will scaffold the basic config and files for getting you started. It will create the following file structure:
 
 ```bash
 ├── deno.json
@@ -27,25 +33,34 @@ Given the following structure:
     └── index.tsx
 ```
 
-And your `deno.json` looking like this:
+And a `deno.json` looking like this:
 
 ```json
 {
   "tasks": {
-    "dhp": "echo \"import 'dhp/cli'\" | deno run -A -"
+    "dhp": "echo \"import 'dhp/cli.ts'\" | deno run -A -",
+    "init": "deno run dhp init",
+    "dev": "deno run dhp dev",
+    "build": "deno run dhp build",
+    "start": "deno run dhp start"
   },
-  "compilerOptions": {
-    "jsx": "precompile",
-    "jsxImportSource": "dhp"
+  "imports": {
+    "dhp/": "https://deno.land/x/dhp/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts"
   },
   "nodeModulesDir": "auto",
-  "imports": {
-    "dhp": "jsr:dhp@^0.0.3"
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "dhp",
+    "lib": [
+      "deno.window",
+      "dom"
+    ]
   }
 }
 ```
 
-You can start enjoying the simplicity of rendering your JSX on the server
+You can now start enjoying the simplicity of rendering your JSX on the server
 without build step (except for Vite's assets).
 
 ## Commands

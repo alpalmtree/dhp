@@ -30,33 +30,18 @@ export type Routes = @routeTypes
 export type Actions = @actionTypes`
   .trimStart();
 
-export const resolverTemplate = `
-import {
-  type Resolver,
-  type RouteImport,
-} from "dhp/mod.ts";
-
-export const resolver: Resolver<RouteImport> = async (
-  path: string,
-) => {
-  return await import(path);
-};
-`.trimStart();
 export const bootstrapTemplate = `
 import { Hono, serveStatic } from "dhp/hono.ts";
 import { build } from "dhp/vite.ts";
 import { appConfig, type Config, createRouter } from "dhp/mod.ts";
-import { resolver } from "./resolver.ts";
 
 const command = Deno.args.at(0);
 
 const app = new Hono();
 
-export const appRuntime = await createRouter({
-  app: app,
-  resolver: resolver,
+export const appRuntime = await createRouter(app, {
+  resolver: (path) => import(path),
   devMode: command !== "start",
-  config: () => import("../dhp.config.ts") as Promise<Config>,
 });
 
 app.use("*", serveStatic({ root: "./public" }));

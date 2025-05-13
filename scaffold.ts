@@ -56,3 +56,7 @@ Promise.all([
   writeIfNotExists("/resources/index.js"),
   writeIfNotExists("/views/index.tsx"),
 ]);
+
+new Deno.Command("deno", {
+  args: `run init`.split(" "),
+}).spawn();

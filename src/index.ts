@@ -47,7 +47,6 @@ const main = async (
 };
 
 export type StartupConfiguration = {
-  app: Hono;
   resolver: Resolver;
   devMode: boolean;
   config?: () => Promise<Config>;
@@ -57,17 +56,19 @@ export type StartupConfiguration = {
  * Function accepting a Hono app instance for initializing
  * the file-based web router. It returns the runtime config
  * generated after the creation of the router.
- * @param startupConfiguration Hono instance
+ * @param app Hono instance
+ * @param startupConfiguration Startup config
  * @returns
  */
 export const createRouter = async (
-  { app, resolver, devMode, config }: StartupConfiguration,
+  app: Hono,
+  { resolver, devMode }: StartupConfiguration,
 ): Promise<{
   appConfig: Config;
   appGlobals: AppGlobals;
   app: Hono;
 }> => {
-  const projectConfig = await config?.();
+  const projectConfig = await resolver(`${Deno.cwd}/dhp.config.ts`) as Config;
   appConfig = getConfig(projectConfig);
   await main(app, resolver);
   appConfig.viteDevMode = devMode;
