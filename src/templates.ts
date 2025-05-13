@@ -43,8 +43,8 @@ export const resolver: Resolver<RouteImport> = async (
 };
 `.trimStart();
 export const bootstrapTemplate = `
-import { Hono, serveStatic } from "../../../hono.ts";
-import { appConfig, createRouter } from "../../../mod.ts";
+import { Hono, serveStatic } from "dhp/hono.ts";
+import { appConfig, createRouter } from "dhp/mod.ts";
 import { resolver } from "./resolver.ts";
 import { build } from "npm:vite@6.3.5";
 

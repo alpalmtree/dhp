@@ -59,7 +59,7 @@ export const writeTypesFilesOnInit = () => {
   writeFileSync(
     `${cwd()}/.dhp/routes.d.ts`,
     routesTypesTemplate.replace("@routeTypes", '""').replace(
-      "actionTypes",
+      "@actionTypes",
       '""',
     ),
   );
