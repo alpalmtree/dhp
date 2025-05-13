@@ -6,7 +6,6 @@ import type { AppGlobals } from "./appGlobals.ts";
 import {
   bootstrapTemplate,
   defaultConfigTemplate,
-  resolverTemplate,
   routeGettersTemplate,
   routesTypesTemplate,
 } from "./templates.ts";
@@ -15,15 +14,6 @@ export const writeConfigFile = () => {
   if (existsSync(`${cwd()}/dhp.config.ts`)) return;
 
   writeFileSync(`${cwd()}/dhp.config.ts`, defaultConfigTemplate);
-};
-
-export const writeResolverFile = () => {
-  if (existsSync(`${cwd()}/.dhp/resolver.ts`)) return;
-
-  writeFileSync(
-    `${cwd()}/.dhp/resolver.ts`,
-    resolverTemplate,
-  );
 };
 
 export const writeTypesFiles = (appGlobals: AppGlobals) => {

@@ -12,7 +12,6 @@ import { fs } from "./deps/std.ts";
 import {
   writeBootstrapFile,
   writeConfigFile,
-  writeResolverFile,
   writeRouteGettersFile,
   writeTypesFilesOnInit,
 } from "./writeFiles.ts";
@@ -29,7 +28,6 @@ await fs.ensureDir(`${Deno.cwd()}/.dhp`);
 
 const generateTemplateFiles = () => {
   writeRouteGettersFile();
-  writeResolverFile();
   writeBootstrapFile();
   writeConfigFile();
   writeTypesFilesOnInit();
