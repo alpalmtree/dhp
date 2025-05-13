@@ -1,3 +1,4 @@
+import { generateTemplateFiles } from "./src/cli.ts";
 import { fs } from "./src/deps/std.ts";
 const { exists, ensureDir } = fs;
 
@@ -57,6 +58,4 @@ Promise.all([
   writeIfNotExists("/views/index.tsx"),
 ]);
 
-new Deno.Command("deno", {
-  args: `run init`.split(" "),
-}).spawn();
+generateTemplateFiles();

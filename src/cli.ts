@@ -26,7 +26,7 @@ if (!command || !availableCommands.includes(command)) {
 }
 await fs.ensureDir(`${Deno.cwd()}/.dhp`);
 
-const generateTemplateFiles = () => {
+export const generateTemplateFiles = () => {
   writeRouteGettersFile();
   writeBootstrapFile();
   writeConfigFile();
