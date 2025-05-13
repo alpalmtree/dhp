@@ -29,8 +29,8 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp@v0.0.6/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhpv0.0.6/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {
