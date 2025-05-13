@@ -6,7 +6,7 @@ import type { Config } from "./config.ts";
 import { getViteScripts } from "./viteSetup.ts";
 import { getPaths, transformPath } from "./paths.ts";
 
-export type Resolver<T> = (path: string) => Promise<T>;
+export type Resolver = (path: string) => Promise<RouteImport>;
 
 export type AppGlobals = {
   namedRoutes: {
@@ -42,7 +42,7 @@ export type RouteImport = {
 type PopulateGlobalsProps = {
   appConfig: Config;
   appGlobalsInstance: ReturnType<typeof getGlobalVariables>;
-  resolver: Resolver<RouteImport>;
+  resolver: Resolver;
 };
 
 export const populateGlobals = async (

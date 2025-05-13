@@ -29,11 +29,9 @@ export let appGlobals: AppGlobals;
 
 const main = async (
   app: Hono,
-  resolver: Resolver<Config | RouteImport>,
+  resolver: Resolver,
 ): Promise<void> => {
   await fs.ensureDir(`${Deno.cwd()}/.dhp`);
-
-  appConfig = await getConfig(resolver as Resolver<Config>);
   appGlobals = getGlobalVariables();
 
   if (appConfig.useVite) await viteSetup(appConfig);
@@ -41,7 +39,7 @@ const main = async (
   const routes = await populateGlobals({
     appConfig,
     appGlobalsInstance: appGlobals,
-    resolver: resolver as Resolver<RouteImport>,
+    resolver: resolver as Resolver,
   });
 
   writeTypesFiles(appGlobals);
@@ -50,27 +48,31 @@ const main = async (
 
 export type StartupConfiguration = {
   app: Hono;
-  resolver: Resolver<RouteImport | Config>;
+  resolver: Resolver;
   devMode: boolean;
+  config?: () => Promise<Config>;
 };
 
 /**
  * Function accepting a Hono app instance for initializing
  * the file-based web router. It returns the runtime config
  * generated after the creation of the router.
- * @param app Hono instance
- * @param resolver Resolver for local dynamic imports
+ * @param startupConfiguration Hono instance
  * @returns
  */
 export const createRouter = async (
-  { app, resolver, devMode }: StartupConfiguration,
+  { app, resolver, devMode, config }: StartupConfiguration,
 ): Promise<{
   appConfig: Config;
   appGlobals: AppGlobals;
   app: Hono;
 }> => {
+  const projectConfig = await config?.();
+  appConfig = getConfig(projectConfig);
   await main(app, resolver);
-  if (appConfig.useVite && appConfig.viteDevMode && devMode) {
+  appConfig.viteDevMode = devMode;
+
+  if (appConfig.useVite && appConfig.viteDevMode) {
     await viteDevServer(appConfig);
   }
 

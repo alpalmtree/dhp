@@ -44,9 +44,9 @@ export const resolver: Resolver<RouteImport> = async (
 `.trimStart();
 export const bootstrapTemplate = `
 import { Hono, serveStatic } from "dhp/hono.ts";
-import { appConfig, createRouter } from "dhp/mod.ts";
+import { build } from "dhp/vite.ts";
+import { appConfig, type Config, createRouter } from "dhp/mod.ts";
 import { resolver } from "./resolver.ts";
-import { build } from "npm:vite@6.3.5";
 
 const command = Deno.args.at(0);
 
@@ -56,6 +56,7 @@ export const appRuntime = await createRouter({
   app: app,
   resolver: resolver,
   devMode: command !== "start",
+  config: () => import("../dhp.config.ts") as Promise<Config>,
 });
 
 app.use("*", serveStatic({ root: "./public" }));
@@ -67,18 +68,6 @@ if (import.meta.main) {
   }
 
   Deno.serve(app.fetch);
-}`;
-
-export const viteBuildTemplate = `
-import { Hono } from "dhp/hono.ts";
-import { createRouter, appConfig } from "dhp/mod.ts";
-import { resolver } from "./resolver.ts;
-import { build } from "npm:vite@6.3.5";
-
-export const appRuntime = await createRouter(new Hono(), resolver);
-
-if (import.meta.main) {
-  await build(appConfig.vite)
 }`;
 
 export const routeGettersTemplate = `

@@ -1,4 +1,4 @@
-import { build, createServer } from "npm:vite@6.3.5";
+import { build, createServer } from "./deps/vite.ts";
 
 import { cwd } from "node:process";
 import { existsSync, readFileSync } from "node:fs";

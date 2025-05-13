@@ -1,10 +1,4 @@
-import { existsSync, writeFileSync } from "node:fs";
-
-import type { UserConfig } from "npm:vite@6.3.5";
-
-import { defaultConfigTemplate } from "./templates.ts";
-import type { Resolver } from "./appGlobals.ts";
-const { cwd } = Deno;
+import type { UserConfig } from "./deps/vite.ts";
 
 /**
  * Accepted parameters for configuring your app.
@@ -37,20 +31,11 @@ const defaultConfig: Config = {
  * Function for overwriting the default configuration.
  * @returns
  */
-export const getConfig = async (
-  resolver: Resolver<Config>,
-): Promise<Config> => {
+export const getConfig = (
+  config?: Config,
+): Config => {
   const inner = structuredClone(defaultConfig);
+  Object.assign(inner, config ?? {});
 
-  if (!existsSync(`${cwd()}/dhp.config.ts`)) {
-    writeFileSync(`${cwd()}/dhp.config.ts`, defaultConfigTemplate);
-  }
-
-  try {
-    const { default: userConfig } = await resolver(
-      `${cwd()}/dhp.config.ts`,
-    ) as { default: Config };
-    Object.assign(inner, userConfig);
-  } catch (_) { /** */ }
   return inner;
 };
