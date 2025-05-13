@@ -1,4 +1,4 @@
-import { generateTemplateFiles } from "./src/cli.ts";
+import { generateTemplateFiles } from "./src/writeFiles.ts";
 import { fs } from "./src/deps/std.ts";
 const { exists, ensureDir } = fs;
 
@@ -29,8 +29,8 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp@v0.0.6/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhpv0.0.6/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp@v0.0.7/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhpv0.0.7/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {

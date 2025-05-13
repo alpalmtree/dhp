@@ -72,3 +72,10 @@ export const writeBootstrapFile = () => {
     bootstrapTemplate,
   );
 };
+
+export const generateTemplateFiles = () => {
+  writeRouteGettersFile();
+  writeBootstrapFile();
+  writeConfigFile();
+  writeTypesFilesOnInit();
+};

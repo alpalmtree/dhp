@@ -9,12 +9,7 @@
 
 import { fs } from "./deps/std.ts";
 
-import {
-  writeBootstrapFile,
-  writeConfigFile,
-  writeRouteGettersFile,
-  writeTypesFilesOnInit,
-} from "./writeFiles.ts";
+import { generateTemplateFiles } from "./writeFiles.ts";
 
 const availableCommands = ["start", "dev", "build", "init"];
 const { cwd } = Deno;
@@ -25,13 +20,6 @@ if (!command || !availableCommands.includes(command)) {
   Deno.exit();
 }
 await fs.ensureDir(`${Deno.cwd()}/.dhp`);
-
-export const generateTemplateFiles = () => {
-  writeRouteGettersFile();
-  writeBootstrapFile();
-  writeConfigFile();
-  writeTypesFilesOnInit();
-};
 
 const commands: { [key: string]: () => void } = {
   "init": () => {
