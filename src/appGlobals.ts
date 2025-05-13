@@ -41,7 +41,7 @@ export type RouteImport = {
 
 type PopulateGlobalsProps = {
   appConfig: Config;
-  appGlobalsInstance: ReturnType<typeof getGlobalVariables>;
+  appGlobalsInstance: AppGlobals;
   resolver: Resolver;
 };
 

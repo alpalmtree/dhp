@@ -68,7 +68,9 @@ export const createRouter = async (
   appGlobals: AppGlobals;
   app: Hono;
 }> => {
-  const projectConfig = await resolver(`${Deno.cwd}/dhp.config.ts`) as Config;
+  const projectConfig = await resolver(
+    `file://${Deno.cwd()}/dhp.config.ts`,
+  ) as Config;
   appConfig = getConfig(projectConfig);
   await main(app, resolver);
   appConfig.viteDevMode = devMode;

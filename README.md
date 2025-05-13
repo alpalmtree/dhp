@@ -19,7 +19,7 @@ just in case you need to tweak anything.
 ## Getting started
 If you're starting from a blank project, you can run the following command *inside your desired root folder*:
 ```bash
-deno run -A https://deno.land/x/dhp@v0.0.8/scaffold.ts
+deno run -A https://deno.land/x/dhp@v0.0.9/scaffold.ts
 ```
 
 This will scaffold the basic config and files for getting you started. It will create the following file structure:
@@ -45,8 +45,8 @@ And a `deno.json` looking like this:
     "start": "deno run dhp start"
   },
   "imports": {
-    "dhp/": "https://deno.land/x/dhp@v0.0.8/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.8/ssx.ts"
+    "dhp/": "https://deno.land/x/dhp@v0.0.9/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.9/ssx.ts"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
