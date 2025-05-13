@@ -1,5 +1,3 @@
-import type { Config } from "./index.ts";
-
 export const defaultConfigTemplate = `
 /**
  * This file will only be generated only if it doesn't exists.
@@ -13,8 +11,6 @@ export default {
   viewsDir: "/views",
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
-  // Folder where the generated files will live
-  routerPath: "/file-router",
   // You can opt out from vite by setting this to false
   useVite: true,
   // Entry points for vite build
@@ -34,31 +30,63 @@ export type Routes = @routeTypes
 export type Actions = @actionTypes`
   .trimStart();
 
-export const bootstrapTemplate = (appConfig: Config, dev: boolean) => `
-/**
- * CAUTION: This file will be re-generated whenever you start the dev server.
- * If you want to edit anything, use a hwr.config.ts file or export your middleware
- */
-import { Hono, serveStatic } from "dhp/hono.ts";
-import { createRouter, appConfig } from "dhp/mod.ts";
+export const resolverTemplate = `
+import {
+  type Resolver,
+  type RouteImport,
+} from "dhp/mod.ts";
 
-Object.assign(appConfig, { viteDevMode: ${dev} });
+export const resolver: Resolver<RouteImport> = async (
+  path: string,
+) => {
+  return await import(path);
+};
+`.trimStart();
+export const bootstrapTemplate = `
+import { Hono, serveStatic } from "../../../hono.ts";
+import { appConfig, createRouter } from "../../../mod.ts";
+import { resolver } from "./resolver.ts";
+import { build } from "npm:vite@6.3.5";
+
+const command = Deno.args.at(0);
 
 const app = new Hono();
 
-export const appRuntime = await createRouter(app);
-app.use("*", serveStatic({ root: ".${appConfig.publicDir}" }));
+export const appRuntime = await createRouter({
+  app: app,
+  resolver: resolver,
+  devMode: command !== "start",
+});
+
+app.use("*", serveStatic({ root: "./public" }));
 
 if (import.meta.main) {
+  if (command === "build") {
+    await build(appConfig.vite);
+    Deno.exit();
+  }
+
   Deno.serve(app.fetch);
 }`;
 
+export const viteBuildTemplate = `
+import { Hono } from "dhp/hono.ts";
+import { createRouter, appConfig } from "dhp/mod.ts";
+import { resolver } from "./resolver.ts;
+import { build } from "npm:vite@6.3.5";
+
+export const appRuntime = await createRouter(new Hono(), resolver);
+
+if (import.meta.main) {
+  await build(appConfig.vite)
+}`;
+
 export const routeGettersTemplate = `
-import { namedRoutes, actions } from 'dhp/mod.ts'
+import { appGlobals } from 'dhp/mod.ts'
 import type { Actions, Routes } from './routes.d.ts';
 
 export const route = (routeName: Routes, params = {}): string => {
-  let foundRoute = namedRoutes[routeName];
+  let foundRoute = appGlobals.namedRoutes[routeName];
 
   Object.entries(params).forEach(([key, value]) => {
     foundRoute = foundRoute.replace(":" + key, value as string);
@@ -70,7 +98,7 @@ export const action = (
   actionName: Actions,
   params = {},
 ): string => {
-  let foundAction = actions[actionName];
+  let foundAction = appGlobals.actions[actionName];
 
   Object.entries(params).forEach(([key, value]) => {
     foundAction = foundAction.replace(":" + key, value as string);

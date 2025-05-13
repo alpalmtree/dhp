@@ -7,18 +7,7 @@ import type { Config } from "./config.ts";
 import { getViteScripts } from "./viteSetup.ts";
 import { getPaths, transformPath } from "./paths.ts";
 
-const getNames = (
-  name: "actions" | "namedRoutes",
-  fileRouterPath: string,
-): { [key: string]: string } => {
-  if (existsSync(`${fileRouterPath}/names.json`)) {
-    const names = JSON.parse(
-      readFileSync(`${fileRouterPath}/names.json`, { encoding: "utf-8" }),
-    );
-    return names[name];
-  }
-  return {};
-};
+export type Resolver<T> = (path: string) => Promise<T>;
 
 export type AppGlobals = {
   namedRoutes: {
@@ -32,12 +21,10 @@ export type AppGlobals = {
   };
 };
 
-export const getGlobalVariables = (appConfig: Config): AppGlobals => {
-  const fileRouterPath: string = `${cwd()}${appConfig.routerPath}`;
-
+export const getGlobalVariables = (): AppGlobals => {
   return {
-    namedRoutes: getNames("namedRoutes", fileRouterPath),
-    actions: getNames("actions", fileRouterPath),
+    namedRoutes: {},
+    actions: {},
     viteScripts: getViteScripts(),
   };
 };
@@ -56,10 +43,11 @@ export type RouteImport = {
 type PopulateGlobalsProps = {
   appConfig: Config;
   appGlobalsInstance: ReturnType<typeof getGlobalVariables>;
+  resolver: Resolver<RouteImport>;
 };
 
 export const populateGlobals = async (
-  { appConfig, appGlobalsInstance }: PopulateGlobalsProps,
+  { appConfig, appGlobalsInstance, resolver }: PopulateGlobalsProps,
 ): Promise<Routes> => {
   const routes: Routes = [];
 
@@ -67,8 +55,8 @@ export const populateGlobals = async (
   if (paths.length === 0) return routes;
 
   for (const path of paths) {
-    const exportPath = `.${appConfig.viewsDir}/${path}`;
-    const exports = await import(exportPath);
+    const exportPath = `${cwd()}${appConfig.viewsDir}/${path}`;
+    const exports = await resolver(exportPath);
     const name = exports.name;
     const exportedActions = exports.actions;
     const renderer = exports.default;

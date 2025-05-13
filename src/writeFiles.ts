@@ -6,19 +6,28 @@ import type { AppGlobals } from "./appGlobals.ts";
 import {
   bootstrapTemplate,
   defaultConfigTemplate,
+  resolverTemplate,
   routeGettersTemplate,
   routesTypesTemplate,
 } from "./templates.ts";
-import type { Config } from "./config.ts";
 
 export const writeConfigFile = () => {
-  if (!existsSync(`${cwd()}/dhp.config.ts`)) {
-    writeFileSync(`${cwd()}/dhp.config.ts`, defaultConfigTemplate);
-  }
+  if (existsSync(`${cwd()}/dhp.config.ts`)) return;
+
+  writeFileSync(`${cwd()}/dhp.config.ts`, defaultConfigTemplate);
 };
 
-export const writeTypesFiles = (appGlobals: AppGlobals, appConfig: Config) => {
-  const fileRouterPath: string = `${cwd()}${appConfig.routerPath}`;
+export const writeResolverFile = () => {
+  if (existsSync(`${cwd()}/.dhp/resolver.ts`)) return;
+
+  writeFileSync(
+    `${cwd()}/.dhp/resolver.ts`,
+    resolverTemplate,
+  );
+};
+
+export const writeTypesFiles = (appGlobals: AppGlobals) => {
+  const fileRouterPath: string = `${cwd()}/.dhp`;
   const namedRoutesKeys = Object.keys(appGlobals.namedRoutes);
   const actionsKeys = Object.keys(appGlobals.actions);
 
@@ -44,16 +53,32 @@ export const writeTypesFiles = (appGlobals: AppGlobals, appConfig: Config) => {
   );
 };
 
-export const writeRouteGettersFile = (appConfig: Config) => {
+export const writeTypesFilesOnInit = () => {
+  if (existsSync(`${cwd()}/.dhp/routes.d.ts`)) return;
+
   writeFileSync(
-    `${cwd()}${appConfig.routerPath}/route-getters.ts`,
+    `${cwd()}/.dhp/routes.d.ts`,
+    routesTypesTemplate.replace("@routeTypes", '""').replace(
+      "actionTypes",
+      '""',
+    ),
+  );
+};
+
+export const writeRouteGettersFile = () => {
+  if (existsSync(`${cwd()}/.dhp/route-getters.ts`)) return;
+
+  writeFileSync(
+    `${cwd()}/.dhp/route-getters.ts`,
     routeGettersTemplate,
   );
 };
 
-export const writeBootstrapFile = (appConfig: Config, dev = true) => {
+export const writeBootstrapFile = () => {
+  if (existsSync(`${cwd()}/.dhp/bootstrap.ts`)) return;
+
   writeFileSync(
-    `${cwd()}${appConfig.routerPath}/bootstrap.ts`,
-    bootstrapTemplate(appConfig, dev),
+    `${cwd()}/.dhp/bootstrap.ts`,
+    bootstrapTemplate,
   );
 };

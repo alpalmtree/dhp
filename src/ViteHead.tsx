@@ -7,13 +7,13 @@
  * @module
  */
 
-import { appConfig, viteScripts } from "./index.ts";
+import { appConfig, appGlobals } from "./index.ts";
 
 export const ViteHead = ({ script }: { script?: string }) => {
   if (!script) return null;
 
   if (appConfig.viteDevMode === false) {
-    const scriptsString = viteScripts[script];
+    const scriptsString = appGlobals.viteScripts[script];
     return (
       <>
         {{ __html: scriptsString }}

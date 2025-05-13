@@ -6,14 +6,15 @@
  * - Start server with prod config
  * @module
  */
-import { build } from "npm:vite@6.3.5";
 
-import { appConfig } from "./index.ts";
+import { fs } from "./vendor/std.ts";
 
 import {
   writeBootstrapFile,
   writeConfigFile,
+  writeResolverFile,
   writeRouteGettersFile,
+  writeTypesFilesOnInit,
 } from "./writeFiles.ts";
 
 const availableCommands = ["start", "dev", "build", "init"];
@@ -24,37 +25,36 @@ if (!command || !availableCommands.includes(command)) {
   console.log(`Available commands are: ${availableCommands.join(" | ")}`);
   Deno.exit();
 }
+await fs.ensureDir(`${Deno.cwd()}/.dhp`);
 
-const generateTemplateFiles = (dev = true) => {
-  writeRouteGettersFile(appConfig);
-  writeBootstrapFile(appConfig, dev);
+const generateTemplateFiles = () => {
+  writeRouteGettersFile();
+  writeResolverFile();
+  writeBootstrapFile();
   writeConfigFile();
+  writeTypesFilesOnInit();
 };
 
 const commands: { [key: string]: () => void } = {
   "init": () => {
     generateTemplateFiles();
   },
-  "build": async () => {
-    generateTemplateFiles();
-    if (!appConfig.useVite) return;
-    await build(appConfig.vite);
+  "build": () => {
+    (new Deno.Command("deno", {
+      args: `run -A ${cwd()}/.dhp/bootstrap.ts build`.split(" "),
+    })).spawn();
   },
   "start": () => {
-    generateTemplateFiles(false);
     const start = new Deno.Command("deno", {
-      args: `run -A ${cwd()}${appConfig.routerPath}/bootstrap.ts`
+      args: `run -A ${cwd()}/.dhp/bootstrap.ts start`
         .split(" "),
     });
     start.spawn();
   },
   "dev": () => {
-    generateTemplateFiles();
-
     const dev = new Deno.Command("deno", {
-      args:
-        `run -A --watch --watch-exclude=${appConfig.routerPath} ${cwd()}${appConfig.routerPath}/bootstrap.ts`
-          .split(" "),
+      args: `run -A --watch --watch-exclude=/.dhp ${cwd()}/.dhp/bootstrap.ts`
+        .split(" "),
     });
 
     dev.spawn();

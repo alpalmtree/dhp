@@ -3,7 +3,7 @@ import { existsSync, writeFileSync } from "node:fs";
 import type { UserConfig } from "npm:vite@6.3.5";
 
 import { defaultConfigTemplate } from "./templates.ts";
-import { path } from "./vendor/std.ts";
+import type { Resolver } from "./appGlobals.ts";
 const { cwd } = Deno;
 
 /**
@@ -13,7 +13,6 @@ export type Config = {
   viewsDir?: string;
   routesPrefix?: string;
   publicDir?: string;
-  routerPath?: string;
   resourcesPath?: string;
   viteDevMode?: boolean;
   useVite?: boolean;
@@ -25,8 +24,6 @@ const defaultConfig: Config = {
   viewsDir: "/views",
   // Folder from where to serve public assets. It will also be the outDir for vite
   publicDir: "/public",
-  // Folder where the generated files will live
-  routerPath: "/file-router",
   // You can opt out from vite by setting this to false
   useVite: true,
   // Entry points for vite build
@@ -40,7 +37,9 @@ const defaultConfig: Config = {
  * Function for overwriting the default configuration.
  * @returns
  */
-export const getConfig = async (): Promise<Config> => {
+export const getConfig = async (
+  resolver: Resolver<Config>,
+): Promise<Config> => {
   const inner = structuredClone(defaultConfig);
 
   if (!existsSync(`${cwd()}/dhp.config.ts`)) {
@@ -48,12 +47,10 @@ export const getConfig = async (): Promise<Config> => {
   }
 
   try {
-    const { default: userConfig } = await import(
-      `${path.resolve("dhp.config.ts")}`
-    );
+    const { default: userConfig } = await resolver(
+      `${cwd()}/dhp.config.ts`,
+    ) as { default: Config };
     Object.assign(inner, userConfig);
-  } catch (_) {
-    console.log("Cannot import files from project root :(");
-  }
+  } catch (_) { /** */ }
   return inner;
 };
