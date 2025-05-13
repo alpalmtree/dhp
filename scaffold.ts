@@ -29,8 +29,8 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp@v0.0.7/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhpv0.0.7/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp@v0.0.8/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhpv0.0.8/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {
@@ -47,13 +47,15 @@ if (!await exists(`${Deno.cwd()}/deno.json`)) {
   );
 }
 
-Promise.all([
+await fs.ensureDir(`${Deno.cwd()}/.dhp`);
+
+await Promise.all([
   ensureDir(`${Deno.cwd()}/resources`),
   ensureDir(`${Deno.cwd()}/views`),
   ensureDir(`${Deno.cwd()}/public`),
 ]);
 
-Promise.all([
+await Promise.all([
   writeIfNotExists("/resources/index.js"),
   writeIfNotExists("/views/index.tsx"),
 ]);
