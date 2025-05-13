@@ -47,7 +47,8 @@ export const getConfig = async (): Promise<Config> => {
   }
 
   try {
-    const { default: userConfig } = await import(`${cwd()}/dhp.config.ts`);
+    const configFileName = "./dhp.config.ts";
+    const { default: userConfig } = await import(configFileName);
     Object.assign(inner, userConfig);
   } catch (_) {
     console.log("Cannot import files from project root :(");

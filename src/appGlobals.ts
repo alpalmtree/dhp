@@ -67,7 +67,7 @@ export const populateGlobals = async (
   if (paths.length === 0) return routes;
 
   for (const path of paths) {
-    const exportPath = `${cwd()}${appConfig.viewsDir}/${path}`;
+    const exportPath = `.${appConfig.viewsDir}/${path}`;
     const exports = await import(exportPath);
     const name = exports.name;
     const exportedActions = exports.actions;

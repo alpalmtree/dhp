@@ -1,4 +1,23 @@
-import { copy, exists } from "jsr:@std/fs@1.0.x";
+import { fs } from "./src/vendor/std.ts";
+const { exists, ensureDir } = fs;
+
+const REMOTE_URL = "https://deno.land/x/denophp/src/scaffold_template"; // always get the latest
+const writeIfNotExists = async (fileRelativePath: string): Promise<void> => {
+  const fileExists = await exists(`${Deno.cwd()}${fileRelativePath}`);
+  if (fileExists) return new Promise((r) => r());
+
+  const file = await fetch(`${REMOTE_URL}${fileRelativePath}`);
+  const fileContent = await file.text();
+
+  return new Promise((resolve) => {
+    Deno.writeTextFile(
+      `${Deno.cwd()}${fileRelativePath}`,
+      fileContent,
+    );
+
+    resolve();
+  });
+};
 
 const baseDenoConfig = {
   tasks: {
@@ -9,19 +28,15 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp/ssx.ts",
+    "dhp/": "https://deno.land/x/denophp/",
+    "dhp/jsx-runtime": "https://deno.land/x/denophp/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {
     jsx: "precompile",
     jsxImportSource: "dhp",
+    lib: ["deno.window", "dom"],
   },
-};
-
-const copyDir = async (name: string) => {
-  if (await exists(`${Deno.cwd()}/${name}`)) return;
-  await copy(`./src/scaffold_template/${name}`, `${Deno.cwd()}/${name}`);
 };
 
 if (!await exists(`${Deno.cwd()}/deno.json`)) {
@@ -31,6 +46,13 @@ if (!await exists(`${Deno.cwd()}/deno.json`)) {
   );
 }
 
-await copyDir("resources");
-await copyDir("views");
-await copyDir("public");
+Promise.all([
+  ensureDir(`${Deno.cwd()}/resources`),
+  ensureDir(`${Deno.cwd()}/views`),
+  ensureDir(`${Deno.cwd()}/public`),
+]);
+
+Promise.all([
+  writeIfNotExists("/resources/index.js"),
+  writeIfNotExists("/views/index.tsx"),
+]);
