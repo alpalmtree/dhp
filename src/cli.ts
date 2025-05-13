@@ -7,7 +7,7 @@
  * @module
  */
 
-import { fs } from "./vendor/std.ts";
+import { fs } from "./deps/std.ts";
 
 import {
   writeBootstrapFile,

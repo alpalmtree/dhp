@@ -1,5 +1,5 @@
-import type { Hono } from "./vendor/hono.ts";
-import { fs } from "./vendor/std.ts";
+import type { Hono } from "./deps/hono.ts";
+import { fs } from "./deps/std.ts";
 
 import { type Config, getConfig } from "./config.ts";
 import { viteDevServer, viteSetup } from "./viteSetup.ts";

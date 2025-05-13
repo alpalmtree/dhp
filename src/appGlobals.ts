@@ -1,5 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
-import type { Context, Hono } from "./vendor/hono.ts";
+import type { Context, Hono } from "./deps/hono.ts";
 
 const { cwd } = Deno;
 
