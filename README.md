@@ -32,15 +32,15 @@ And your `deno.json` looking like this:
 ```json
 {
   "tasks": {
-    "dhp": "echo \"import '@timberstack/dhp/cli'\" | deno run -A -"
+    "dhp": "echo \"import 'dhp/cli'\" | deno run -A -"
   },
   "compilerOptions": {
     "jsx": "precompile",
-    "jsxImportSource": "@timberstack/dhp"
+    "jsxImportSource": "dhp"
   },
   "nodeModulesDir": "auto",
   "imports": {
-    "@timberstack/dhp": "jsr:@timberstack/dhp@^0.0.3"
+    "dhp": "jsr:dhp@^0.0.3"
   }
 }
 ```
@@ -93,7 +93,7 @@ file-router
 ## Anatomy of a file
 
 ```tsx
-import type { Context } from "@timberstack/dhp/hono";
+import type { Context } from "dhp/hono.ts";
 
 // it includes the exported ViteHead component. No magic here, just create and use it.
 import { Layout } from "./_components/layout.tsx";
@@ -147,7 +147,7 @@ export default function () {
 ### `ViteHead`
 
 ```tsx
-import { ViteHead } from "@timberstack/dhp/vite";
+import { ViteHead } from "dhp/vite.ts";
 
 <head>
   {/* the script name must be relative to your specified resources dir path. By default, "/resources/entrypoints/" */}
