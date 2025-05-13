@@ -5,6 +5,6 @@
     "jsxImportSource": "dhp"
   },
   "imports": {
-    "dhp/jsx-runtime": "./src/vendor/ssx.ts"
+    "dhp/jsx-runtime": "./src/deps/ssx.ts"
   }
 }

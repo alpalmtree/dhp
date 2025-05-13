@@ -1,1 +1,1 @@
-export * from "./src/vendor/ssx.ts";
+export * from "./src/deps/ssx.ts";

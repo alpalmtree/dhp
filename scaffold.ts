@@ -1,4 +1,4 @@
-import { fs } from "./src/vendor/std.ts";
+import { fs } from "./src/deps/std.ts";
 const { exists, ensureDir } = fs;
 
 const REMOTE_URL = "https://deno.land/x/denophp/src/scaffold_template"; // always get the latest
