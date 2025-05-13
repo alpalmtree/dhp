@@ -3,6 +3,7 @@ import { existsSync, writeFileSync } from "node:fs";
 import type { UserConfig } from "npm:vite@6.3.5";
 
 import { defaultConfigTemplate } from "./templates.ts";
+import { path } from "./vendor/std.ts";
 const { cwd } = Deno;
 
 /**
@@ -47,8 +48,9 @@ export const getConfig = async (): Promise<Config> => {
   }
 
   try {
-    const configFileName = "./dhp.config.ts";
-    const { default: userConfig } = await import(configFileName);
+    const { default: userConfig } = await import(
+      `${path.resolve("dhp.config.ts")}`
+    );
     Object.assign(inner, userConfig);
   } catch (_) {
     console.log("Cannot import files from project root :(");

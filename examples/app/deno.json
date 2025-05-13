@@ -1,0 +1,22 @@
+{
+  "tasks": {
+    "dhp": "echo \"import 'dhp/cli.ts'\" | deno run -A -",
+    "init": "deno run dhp init",
+    "dev": "deno run dhp dev",
+    "build": "deno run dhp build",
+    "start": "deno run dhp start"
+  },
+  "imports": {
+    "dhp/": "https://deno.land/x/denophp/",
+    "dhp/jsx-runtime": "https://deno.land/x/denophp/ssx.ts"
+  },
+  "nodeModulesDir": "auto",
+  "compilerOptions": {
+    "jsx": "precompile",
+    "jsxImportSource": "dhp",
+    "lib": [
+      "deno.window",
+      "dom"
+    ]
+  }
+}
