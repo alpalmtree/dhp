@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "release": "deno run -A scripts/release.ts"
+    "release": "deno run -A scripts/release.ts",
+    "test": "deno test -A __tests__/tests"
   },
   "lock": false,
   "compilerOptions": {

@@ -50,5 +50,17 @@ await Promise.all([
 ]);
 
 new Deno.Command("git", {
-  args: `tag ${newVersion} && git push origin ${newVersion}`.split(" "),
+  args: `add .`.split(" "),
 }).outputSync();
+
+new Deno.Command("git", {
+  args: `commit -m "release:${newVersion}"`.split(" "),
+}).outputSync();
+
+new Deno.Command("git", {
+  args: `tag ${newVersion}`.split(" "),
+}).outputSync();
+
+new Deno.Command("git", {
+  args: `push --atomic origin main ${newVersion}`.split(" "),
+}).spawn();
