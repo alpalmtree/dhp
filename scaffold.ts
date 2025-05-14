@@ -21,6 +21,7 @@ const writeIfNotExists = async (fileRelativePath: string): Promise<void> => {
 };
 
 const baseDenoConfig = {
+  lock: false,
   tasks: {
     dhp: "echo \"import 'dhp/cli.ts'\" | deno run -A -",
     init: "deno run dhp init",
@@ -29,8 +30,8 @@ const baseDenoConfig = {
     start: "deno run dhp start",
   },
   imports: {
-    "dhp/": "https://deno.land/x/dhp@v0.0.9/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.9/ssx.ts",
+    "dhp/": "https://deno.land/x/dhp@v0.0.10/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.10/ssx.ts",
   },
   nodeModulesDir: "auto",
   compilerOptions: {

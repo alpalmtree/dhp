@@ -35,7 +35,6 @@ export const getConfig = (
   config?: Config,
 ): Config => {
   const inner = structuredClone(defaultConfig);
-  Object.assign(inner, config ?? {});
 
-  return inner;
+  return { ...inner, ...config ?? {} };
 };

@@ -5,6 +5,9 @@
     "jsxImportSource": "dhp"
   },
   "imports": {
-    "dhp/jsx-runtime": "./src/deps/ssx.ts"
+    "@std/expect": "jsr:@std/expect@^1.0.16",
+    "dhp/": "./",
+    "dhp/jsx-runtime": "./src/deps/ssx.ts",
+    "#src/": "./src/"
   }
 }
