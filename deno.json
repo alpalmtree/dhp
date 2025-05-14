@@ -1,4 +1,7 @@
 {
+  "tasks": {
+    "release": "deno run -A scripts/release.ts"
+  },
   "lock": false,
   "compilerOptions": {
     "jsx": "precompile",
