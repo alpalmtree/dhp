@@ -28,8 +28,8 @@ export const transformPath = (path: string) => {
   return noBackSlash;
 };
 
-export const getPaths = (appConfig: Config) => {
-  const routerFolderPath: string = `${cwd()}${appConfig.viewsDir}`;
+export const getPaths = (appConfig?: Config) => {
+  const routerFolderPath: string = `${cwd()}${appConfig?.viewsDir ?? "/views"}`;
 
   if (!existsSync(routerFolderPath)) return [];
   const dirs = readdirSync(routerFolderPath, { recursive: true }) as string[];
