@@ -1,16 +1,14 @@
 import { expect } from "@std/expect/expect";
+import { emptyDir, existsSync } from "@std/fs";
 import { changeDir, rootDir, runCommand, testsPath } from "../fixture/utils.ts";
-import { existsSync } from "node:fs";
 
 globalThis.onbeforeunload = () => {
-  changeDir("root", { cleanup: false });
-  Deno.removeSync(`${testsPath}scaffolded_app`, { recursive: true });
+  changeDir("root");
+  emptyDir(`${testsPath}scaffolded_app`);
 };
 
 Deno.test("Should scaffold the basic template", async (t) => {
   await t.step("Run scaffold file without failing", async () => {
-    Deno.mkdir(`${testsPath}scaffolded_app`);
-
     changeDir("scaffolded_app");
     await runCommand(`deno run -A ${rootDir}/scaffold.ts`);
   });

@@ -71,8 +71,9 @@ export const createRouter = async (
   const projectConfig = await resolver(
     `file://${Deno.cwd()}/dhp.config.ts`,
   ) as { default: Config };
+
   appConfig = getConfig(projectConfig.default);
-  console.log(appConfig);
+
   await main(app, resolver);
   appConfig.viteDevMode = devMode;
 

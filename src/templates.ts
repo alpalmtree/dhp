@@ -33,7 +33,7 @@ export type Actions = @actionTypes`
 export const bootstrapTemplate = `
 import { Hono, serveStatic } from "dhp/hono.ts";
 import { build } from "dhp/vite.ts";
-import { appConfig, type Config, createRouter } from "dhp/mod.ts";
+import { appConfig, createRouter } from "dhp/mod.ts";
 
 const command = Deno.args.at(0);
 

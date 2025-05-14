@@ -2,7 +2,7 @@ import { generateTemplateFiles } from "./src/writeFiles.ts";
 import { fs } from "./src/deps/std.ts";
 const { exists, ensureDir } = fs;
 
-const REMOTE_URL = "https://deno.land/x/dhp/src/scaffold_template"; // always get the latest
+const REMOTE_URL = "https://deno.land/x/dhp/scaffold_template"; // always get the latest
 const writeIfNotExists = async (fileRelativePath: string): Promise<void> => {
   const fileExists = await exists(`${Deno.cwd()}${fileRelativePath}`);
   if (fileExists) return new Promise((r) => r());

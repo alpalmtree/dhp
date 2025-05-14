@@ -1,5 +1,6 @@
+import { existsSync } from "@std/fs/exists";
 import { exec } from "node:child_process";
-import { existsSync, rmSync } from "node:fs";
+import { rmSync } from "node:fs";
 
 export const rootDir = Deno.cwd();
 export const testsPath = `${rootDir}/__tests__/test_apps/`;
@@ -24,14 +25,31 @@ export const removeIfExists = (path: string) => {
 
 export const changeDir = (
   appFolder: string | "root",
-  { cleanup }: { cleanup?: boolean } = { cleanup: false },
 ) => {
-  if (cleanup) {
-    [`${Deno.cwd()}/dhp.config.ts`, `${Deno.cwd()}/.dhp`].forEach(
-      removeIfExists,
-    );
-  }
   appFolder === "root"
     ? Deno.chdir(rootDir)
     : Deno.chdir(`${testsPath}${appFolder}`);
+};
+
+const testBootstrapTemplate = `
+import { Hono } from "dhp/hono.ts";
+import { createRouter } from "dhp/mod.ts";
+
+const app = new Hono();
+
+export const appRuntime = await createRouter(app, {
+  resolver: (path) => import(path),
+  devMode: false,
+});`.trimStart();
+
+export const patchScaffold = () => {
+  if (existsSync(`${Deno.cwd()}/deno.json`)) {
+    Deno.removeSync(`${Deno.cwd()}/deno.json`);
+  }
+  if (existsSync(`${Deno.cwd()}/.dhp`)) {
+    Deno.writeTextFileSync(
+      `${Deno.cwd()}/.dhp/bootstrap.ts`,
+      testBootstrapTemplate,
+    );
+  }
 };
