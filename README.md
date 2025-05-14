@@ -1,7 +1,7 @@
 # Deno Hypertext Preprocessor (DHP)
 
 > [!NOTE]
-> This package is meant to be used with Deno. 
+> This package is meant to be used with Deno.
 
 Plain, simple server side rendering using JSX as templating language. It uses
 Hono under the hood, so anything compatible with Hono should be compatible with
@@ -17,12 +17,16 @@ file in the root of your project for exposing the most useful config options,
 just in case you need to tweak anything.
 
 ## Getting started
-If you're starting from a blank project, you can run the following command *inside your desired root folder*:
+
+If you're starting from a blank project, you can run the following command
+_inside your desired root folder_:
+
 ```bash
 deno run -A https://deno.land/x/dhp@v0.0.11/scaffold.ts
 ```
 
-This will scaffold the basic config and files for getting you started. It will create the following file structure:
+This will scaffold the basic config and files for getting you started. It will
+create the following file structure:
 
 ```bash
 ├── deno.json

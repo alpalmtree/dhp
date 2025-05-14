@@ -1,6 +1,5 @@
-
-import { appGlobals } from 'dhp/mod.ts'
-import type { Actions, Routes } from './routes.d.ts';
+import { appGlobals } from "dhp/mod.ts";
+import type { Actions, Routes } from "./routes.d.ts";
 
 export const route = (routeName: Routes, params = {}): string => {
   let foundRoute = appGlobals.namedRoutes[routeName];
@@ -8,7 +7,7 @@ export const route = (routeName: Routes, params = {}): string => {
   Object.entries(params).forEach(([key, value]) => {
     foundRoute = foundRoute.replace(":" + key, value as string);
   });
-  return foundRoute ?? 'not-found';
+  return foundRoute ?? "not-found";
 };
 
 export const action = (
@@ -20,5 +19,5 @@ export const action = (
   Object.entries(params).forEach(([key, value]) => {
     foundAction = foundAction.replace(":" + key, value as string);
   });
-  return foundAction ?? 'not-found';
+  return foundAction ?? "not-found";
 };

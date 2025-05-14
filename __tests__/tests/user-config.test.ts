@@ -1,9 +1,8 @@
 import { expect } from "@std/expect";
 import { defaultConfigTemplate } from "#src/templates.ts";
-import { changeDir, patchScaffold } from "../fixture/utils.ts";
+import { changeDir } from "../fixture/utils.ts";
 
 changeDir("user_config");
-patchScaffold();
 
 Deno.writeTextFileSync(
   `${Deno.cwd()}/dhp.config.ts`,

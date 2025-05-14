@@ -1,12 +1,11 @@
 import { expect } from "@std/expect";
-import { changeDir, patchScaffold } from "../fixture/utils.ts";
+import { changeDir } from "../fixture/utils.ts";
 
 globalThis.onbeforeunload = () => {
   changeDir("root");
 };
 
 changeDir("default_config");
-patchScaffold();
 
 Deno.test(
   "should have the default config",
