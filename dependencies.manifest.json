@@ -1,0 +1,21 @@
+{
+  "rou3": {
+    "alias": "rou3",
+    "version": "0.6.1",
+    "registry": "npm",
+    "entries": {
+      "js": "dist/index.mjs",
+      "ts": "dist/index.d.mts"
+    }
+  },
+  "@lumeland/ssx": {
+    "alias": "ssx",
+    "version": "0.1.10",
+    "registry": "npm",
+    "entries": {
+      "js": "jsx-runtime.js",
+      "ts": "jsx-runtime.d.ts"
+    },
+    "additionalFiles": ["html.ts", "css.ts"]
+  }
+}
