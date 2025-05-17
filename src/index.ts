@@ -60,7 +60,7 @@ const startServer = (config: Config, serveStatic: boolean) =>
 ) => {
   serveStatic
     ? Deno.serve(options ?? {}, async (req) => {
-      const response = await Router.fetch(req);
+      const response = await Router.handle(req);
       if (response.status === 404) {
         return serveDir(req, {
           fsRoot: config.publicDir?.slice(1) ?? "public",
@@ -69,7 +69,7 @@ const startServer = (config: Config, serveStatic: boolean) =>
       }
       return response;
     })
-    : Deno.serve(Router.fetch);
+    : Deno.serve(Router.handle);
 };
 
 /**
@@ -84,7 +84,7 @@ export const createRouter = async (
 ): Promise<{
   appConfig: Config;
   appGlobals: AppGlobals;
-  fetch: typeof Router.fetch;
+  handle: typeof Router.handle;
   listen: ReturnType<typeof startServer>;
 }> => {
   const projectConfig = await resolver(
@@ -105,7 +105,7 @@ export const createRouter = async (
   return {
     appConfig,
     appGlobals,
-    fetch: Router.fetch,
+    handle: Router.handle,
     listen,
   };
 };

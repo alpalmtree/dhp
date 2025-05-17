@@ -33,17 +33,17 @@ export type Actions = @actionTypes`
 export const bootstrapTemplate = `
 import { createRouter } from "dhp/mod.ts";
 
-const appRuntime = await createRouter({
+const app = await createRouter({
   resolver: (path) => import(path),
   devMode: true,
   serveStatic: true,
 });
 
-export default appRuntime;
+export default app;
 
 if (import.meta.main) {
   appRuntime.listen();
-}`;
+}`.trimStart();
 
 export const routeGettersTemplate = `
 import { appGlobals } from 'dhp/mod.ts'
@@ -68,4 +68,4 @@ export const action = (
     foundAction = foundAction.replace(":" + key, value as string);
   });
   return foundAction ?? 'not-found';
-};`;
+};`.trimStart();

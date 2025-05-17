@@ -57,7 +57,7 @@ export type RouterInstance = {
     },
   ) => void;
 
-  fetch: (req: Request) => Response | Promise<Response>;
+  handle: (req: Request) => Response | Promise<Response>;
   middleware: (
     options: {
       pattern: string;
@@ -105,7 +105,7 @@ export const Router: RouterInstance = {
       Router._routes.push(`[${method}] ${path}`);
     }
   },
-  fetch: async (req: Request) => {
+  handle: async (req: Request) => {
     const currentContext = context({ req });
 
     const matchedRoute = findRoute(
