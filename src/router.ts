@@ -140,7 +140,11 @@ export const Router: RouterInstance = {
 
     const currentResponse = new ResponseFactory({ headers });
 
-    if (!middlewares) return currentResponse.respond(body);
+    if (!middlewares) {
+      return currentResponse.respond(
+        typeof body === "string" ? body : JSON.stringify(body),
+      );
+    }
 
     for (
       const middleware

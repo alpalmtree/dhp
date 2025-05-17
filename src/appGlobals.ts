@@ -72,11 +72,16 @@ export const populateGlobals = async (
         const action = new URL(ctx.req.url).searchParams.get("action");
 
         if (actions && action) {
-          return await actions[action]?.(ctx);
+          const res = await actions[action]?.(ctx);
+          // Identify SSX function element
+          if ("type" in (res as object) && "props" in (res as object)) {
+            return (res as object).toString() as BodyInit;
+          }
+          return res as BodyInit;
         }
 
         if (ctx.req.method === "GET") {
-          return await renderer?.(ctx);
+          return renderer?.(ctx);
         }
         return new Response("Not found", { status: 404 });
       },
