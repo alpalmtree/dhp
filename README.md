@@ -3,9 +3,7 @@
 > [!NOTE]
 > This package is meant to be used with Deno.
 
-Plain, simple server side rendering using JSX as templating language. It uses
-Hono under the hood, so anything compatible with Hono should be compatible with
-DHP. It has an optional integration with Vite for handling JS and CSS files.
+Plain, simple server side rendering using JSX as templating language. It has an optional integration with Vite for handling JS and CSS files.
 
 I developed this primarily for testing and better playing with the rest of the
 timberstack packages. I saw, however, a great potential to this, so I've decided
@@ -29,11 +27,17 @@ This will scaffold the basic config and files for getting you started. It will
 create the following file structure:
 
 ```bash
-├── deno.json
-├── public
-├── resources
-│   └── example.js
-└── views
+.
+├── .dhp # Auto-generated folder with core files. This would be created also when running the dev command
+│   ├── bootstrap.ts # File where we create the app instance and entrypoint of dev command. Feel free to modify it!
+│   ├── route-getters.ts # Route and action getters for a better intellisense
+│   └── routes.d.ts # Auto-generated file. Do not touch!
+├── deno.json # Deno config file with base imports and commands
+├── dhp.config.ts # File for customizing your app
+├── public # Default folder for serving static assets.
+├── resources # Entry folder for vite
+│   └── index.js
+└── views # Your actual router
     └── index.tsx
 ```
 
@@ -83,11 +87,11 @@ directory:
 
 ```bash
 views
-    ├── [all].tsx # /* -> catch all routes in the web router
+    ├── [all].tsx # /** -> catch all routes in the web router
     ├── about.tsx # /about
     ├── index.tsx # /
     └── nested
-        ├── [all].tsx # /nested/*
+        ├── [all].tsx # /nested/**
         ├── $greeting.tsx # /nested/:greeting
         ├── $username
         │   └── user.tsx # /nested/:username/user
@@ -95,25 +99,14 @@ views
         └── index.tsx # /nested
 ```
 
-## File router folder
-
-Under the hood, we are creating a folder in the root of your project called
-`/file-router`. You shall **not** touch anything inside it, since everything
-inside is auto-generated. The most relevant files are:
-
-```bash
-file-router
-   ├── bootstrap.ts # Entry point of your application. After registering your routes, we also register an endpoint pointing at the public folder
-   ├── route-getters.ts # We export two functions from here: route and action. More on those below
-   └── routes.d.ts # Type definitions for your named routes and actions
-```
+> Note: routes will be automatically ordered to respect the correct order. The registry hierarchy is: Static routes > Dynamic routes > Catch all routes
 
 ## Anatomy of a file
 
 ```tsx
-import type { Context } from "dhp/hono.ts";
+import type { DHPContext } from "dhp/mod.ts";
 
-// it includes the exported ViteHead component. No magic here, just create and use it.
+// No magic here, feel free to create your layout in jsx and use it.
 import { Layout } from "./_components/layout.tsx";
 
 // this name will be available for you to access the route without having to worry about the folder structure
@@ -122,14 +115,19 @@ export const name = "index";
 // actions are functions called only via POST and GET methods. You can use the action helper to get intellisense.
 // It would be equivalent to making a request to the current route with a ?action=actionName param.
 export const actions = {
-  createUser: (ctx: Context) => {
-    return ctx.html(<Index user="Working" />);
+  createUser: (_ctx: DHPContext) => {
+    return <Index user="Working" />;
   },
 };
 
+type Props = {
+  ctx: DHPContext, // will always be passed down
+  user?: string
+}
+
 // Your JSX must be the default export
-export default function Index({ user = "" }) {
-  return <h1>Hello from Home page</h1>;
+export default function Index({ ctx, user = "" }: Props) {
+  return <h1>Hello from Home page {user}</h1>;
 }
 ```
 
@@ -147,15 +145,17 @@ import { action, route } from "../file-router/route-getters.ts";
 
 export default function () {
   return (
-    <h1>
-      <a href={route("about")}>About page at route /about</a>{" "}
-      <a href={route("dynamic", { username: "jane" })}>
-        Dynamic route at route /nested/:username/user
-      </a>{" "}
+    <>
+      <h1>
+        <a href={route("about")}>About page at route /about</a>{" "}
+        <a href={route("dynamic", { username: "jane" })}>
+          Dynamic route at route /nested/:username/user
+        </a>{" "}
+      </h1>
       <form method="POST" action={action("createUser")}>
         {/* post request to /user?action=createUser */}
       </form>
-    </h1>
+    </>
   );
 }
 ```
@@ -168,8 +168,8 @@ export default function () {
 import { ViteHead } from "dhp/vite.ts";
 
 <head>
-  {/* the script name must be relative to your specified resources dir path. By default, "/resources/entrypoints/" */}
-  <ViteHead script="script.js" />
+  {/* the script name must be relative to your specified resources dir path. By default, "/resources" */}
+  <ViteHead script="/script.js" />
 </head>;
 ```
 
@@ -197,3 +197,11 @@ const defaultConfig: Config = {
   vite: {},
 };
 ```
+## Acknowledgments 
+This library aims at being as close to the standard response-request lifecycle as possible. Besides the Deno standard library, we also use two libraries to make this possible. They are, however, vendored and will not show in the dependencies graph:
+
+- [rou3](https://github.com/h3js/rou3/tree/main): This is the routing library that powers [h3](https://github.com/h3js/h3) and, hence, [nitro](https://github.com/nitrojs/nitro). Its size and simplicity make it perfect for the goals of DHP.
+- [@lumeland/ssx](https://github.com/oscarotero/ssx): Super fast and bare-bones JSX renderer created by [Óscar Otero](https://github.com/oscarotero), which also powers the JSX in its amazing project called [Lume](https://github.com/lumeland/lume). Besides, it served as a huge inspiration for how to organize and distribute DHP. Moitas grazas polo teu traballo 🔥
+
+## License
+MIT

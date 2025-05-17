@@ -42,7 +42,7 @@ const app = await createRouter({
 export default app;
 
 if (import.meta.main) {
-  appRuntime.listen();
+  app.listen();
 }`.trimStart();
 
 export const routeGettersTemplate = `

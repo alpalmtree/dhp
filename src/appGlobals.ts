@@ -32,7 +32,7 @@ export const getGlobalVariables = (): AppGlobals => {
  * Expected exported variables from your routes.
  */
 export type RouteImport = {
-  default: (ctx?: DHPContext) => string;
+  default: (props: { ctx?: DHPContext }) => string;
   name: string;
   actions: { [key: string]: <T>(ctx?: DHPContext) => T };
 };
@@ -73,6 +73,9 @@ export const populateGlobals = async (
 
         if (actions && action) {
           const res = await actions[action]?.(ctx);
+          if (res === undefined) {
+            return new Response("Not found", { status: 404 });
+          }
           // Identify SSX function element
           if ("type" in (res as object) && "props" in (res as object)) {
             return (res as object).toString() as BodyInit;
@@ -81,7 +84,7 @@ export const populateGlobals = async (
         }
 
         if (ctx.req.method === "GET") {
-          return renderer?.(ctx);
+          return renderer?.({ ctx });
         }
         return new Response("Not found", { status: 404 });
       },
