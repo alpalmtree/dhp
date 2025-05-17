@@ -22,7 +22,7 @@ If you're starting from a blank project, you can run the following command
 _inside your desired root folder_:
 
 ```bash
-deno run -A https://deno.land/x/dhp@v0.0.11/scaffold.ts
+deno run -A https://deno.land/x/dhp@v0.0.12/scaffold.ts
 ```
 
 This will scaffold the basic config and files for getting you started. It will
@@ -49,8 +49,8 @@ And a `deno.json` looking like this:
     "start": "deno run dhp start"
   },
   "imports": {
-    "dhp/": "https://deno.land/x/dhp@v0.0.11/",
-    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.11/ssx.ts"
+    "dhp/": "https://deno.land/x/dhp@v0.0.12/",
+    "dhp/jsx-runtime": "https://deno.land/x/dhp@v0.0.12/ssx.ts"
   },
   "nodeModulesDir": "auto",
   "compilerOptions": {
@@ -104,7 +104,6 @@ inside is auto-generated. The most relevant files are:
 ```bash
 file-router
    ├── bootstrap.ts # Entry point of your application. After registering your routes, we also register an endpoint pointing at the public folder
-   ├── resolver.ts # Resolves the imports within your project
    ├── route-getters.ts # We export two functions from here: route and action. More on those below
    └── routes.d.ts # Type definitions for your named routes and actions
 ```
