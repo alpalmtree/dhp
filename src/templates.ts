@@ -31,23 +31,17 @@ export type Actions = @actionTypes`
   .trimStart();
 
 export const bootstrapTemplate = `
-import { build } from "dhp/vite.ts";
-import { appConfig, createRouter } from "dhp/mod.ts";
+import { createRouter } from "dhp/mod.ts";
 
-const command = Deno.args.at(0);
-
-export const appRuntime = await createRouter({
+const appRuntime = await createRouter({
   resolver: (path) => import(path),
   devMode: true,
-  serveStatic: true
+  serveStatic: true,
 });
 
-if (import.meta.main) {
-  if (command === "build") {
-    await build(appConfig.vite);
-    Deno.exit();
-  }
+export default appRuntime;
 
+if (import.meta.main) {
   appRuntime.listen();
 }`;
 

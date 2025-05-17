@@ -27,7 +27,11 @@ const commands: { [key: string]: () => void } = {
   },
   "build": () => {
     (new Deno.Command("deno", {
-      args: `run -A ${cwd()}/.dhp/bootstrap.ts build`.split(" "),
+      args: [
+        "eval",
+        "--ext=ts",
+        `"import App from './.dhp/bootstrap.ts'; import { build } from 'dhp/vite.ts'; await build(App.appConfig.vite); Deno.exit()"`,
+      ],
     })).spawn();
   },
   "start": () => {
