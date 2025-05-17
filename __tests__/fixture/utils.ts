@@ -32,14 +32,12 @@ export const changeDir = (
 };
 
 const testBootstrapTemplate = `
-import { Hono } from "dhp/hono.ts";
 import { createRouter } from "dhp/mod.ts";
 
-const app = new Hono();
-
-export const appRuntime = await createRouter(app, {
+export const appRuntime = await createRouter({
   resolver: (path) => import(path),
   devMode: false,
+  serveStatic: true,
 });`.trimStart();
 
 export const patchScaffold = () => {

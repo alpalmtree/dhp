@@ -17,7 +17,7 @@ export const transformPath = (path: string) => {
   const route = segmentsToRoute.map((segment) => {
     if (segment === "index") return `/`;
     if (segment?.startsWith("$")) return `/${segment.replace("$", ":")}`;
-    if (segment === "[all]") return "/*";
+    if (segment === "[all]") return "/**";
     return `/${segment}`;
   }).join("");
 

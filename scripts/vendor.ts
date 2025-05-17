@@ -1,5 +1,8 @@
+import { bundle } from "jsr:@deno/emit";
+
 const CDN_MAP: { [key: string]: string } = {
   npm: "https://unpkg.com/",
+  jsr: "jsr:",
 };
 
 type DependenciesManifest = {
@@ -12,6 +15,7 @@ type DependenciesManifest = {
       js: string;
       ts: string;
     };
+    exports?: string[];
   };
 };
 
@@ -36,11 +40,43 @@ const urlsManifest = Object.entries(dependenciesManifest).map(
       },
     );
 
-    return ({ name, alias: data.alias, baseUrl, urls });
+    return ({
+      registry: data.registry,
+      name,
+      alias: data.alias,
+      baseUrl,
+      urls,
+      exports: data.exports,
+    });
   },
 );
 
+const bundleJsr = async (data: typeof urlsManifest[0]) => {
+  const template = `export { ${
+    data.exports?.join(", ")
+  } } from "jsr:${data.name}"`;
+
+  const temporalFilePath = `${Deno.cwd()}/scripts/deps.ts`;
+  Deno.writeTextFileSync(temporalFilePath, template);
+  const { code } = await bundle(temporalFilePath, { minify: true });
+  Deno.removeSync(temporalFilePath);
+  return code;
+};
+
 for (const dep of urlsManifest) {
+  if (dep.registry === "jsr") {
+    const code = await bundleJsr(dep);
+    const DEPS_PATH = `${Deno.cwd()}/src/deps/${dep.alias}`;
+    const depMeta = dependenciesManifest[dep.name];
+
+    try {
+      await Deno.mkdir(DEPS_PATH);
+    } catch { /** */ }
+
+    Deno.writeTextFileSync(`${DEPS_PATH}/${depMeta.entries.js}`, code);
+
+    continue;
+  }
   const DEPS_PATH = `${Deno.cwd()}/src/deps/${dep.alias}`;
   const depMeta = dependenciesManifest[dep.name];
 

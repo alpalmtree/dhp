@@ -1,4 +1,4 @@
-import type { Context, Hono } from "./deps/hono.ts";
+import { type DHPContext, Router } from "./router.ts";
 
 const { cwd } = Deno;
 
@@ -28,15 +28,13 @@ export const getGlobalVariables = (): AppGlobals => {
   };
 };
 
-type Routes = ((app: Hono) => void)[];
-
 /**
  * Expected exported variables from your routes.
  */
 export type RouteImport = {
-  default: (ctx?: Context) => string;
+  default: (ctx?: DHPContext) => string;
   name: string;
-  actions: { [key: string]: <T>(ctx?: Context) => T };
+  actions: { [key: string]: <T>(ctx?: DHPContext) => T };
 };
 
 type PopulateGlobalsProps = {
@@ -47,11 +45,8 @@ type PopulateGlobalsProps = {
 
 export const populateGlobals = async (
   { appConfig, appGlobalsInstance, resolver }: PopulateGlobalsProps,
-): Promise<Routes> => {
-  const routes: Routes = [];
-
+): Promise<void> => {
   const paths = getPaths(appConfig);
-  if (paths.length === 0) return routes;
 
   for (const path of paths) {
     const exportPath = `${cwd()}${appConfig.viewsDir}/${path}`;
@@ -69,24 +64,22 @@ export const populateGlobals = async (
       );
     }
 
-    const appRoute = (app: Hono) => {
-      app.on(["GET", "POST"], route, async (ctx: Context) => {
-        await Promise.resolve();
+    Router.register({
+      path: route,
+      methods: ["GET", "POST"],
+      handler: async (ctx) => {
         const actions = exportedActions;
-        const { action } = ctx.req.query();
+        const action = new URL(ctx.req.url).searchParams.get("action");
 
         if (actions && action) {
-          return actions[action]?.(ctx);
+          return await actions[action]?.(ctx);
         }
 
         if (ctx.req.method === "GET") {
-          return ctx.html(renderer?.(ctx));
+          return await renderer?.(ctx);
         }
-      });
-    };
-
-    routes.push(appRoute);
+        return new Response("Not found", { status: 404 });
+      },
+    });
   }
-
-  return routes;
 };

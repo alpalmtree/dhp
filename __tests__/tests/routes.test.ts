@@ -43,8 +43,8 @@ Deno.test("transformPath function", async (t) => {
     "/",
     "/nested/:greeting",
     "/nested/:username/user",
-    "/nested/*",
-    "/*",
+    "/nested/**",
+    "/**",
   ];
 
   await t.step("It should transform the routes to valid Hono routes", () => {

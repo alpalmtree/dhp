@@ -31,20 +31,16 @@ export type Actions = @actionTypes`
   .trimStart();
 
 export const bootstrapTemplate = `
-import { Hono, serveStatic } from "dhp/hono.ts";
 import { build } from "dhp/vite.ts";
 import { appConfig, createRouter } from "dhp/mod.ts";
 
 const command = Deno.args.at(0);
 
-const app = new Hono();
-
-export const appRuntime = await createRouter(app, {
+export const appRuntime = await createRouter({
   resolver: (path) => import(path),
-  devMode: command !== "start",
+  devMode: true,
+  serveStatic: true
 });
-
-app.use("*", serveStatic({ root: "./public" }));
 
 if (import.meta.main) {
   if (command === "build") {
@@ -52,7 +48,7 @@ if (import.meta.main) {
     Deno.exit();
   }
 
-  Deno.serve(app.fetch);
+  appRuntime.listen();
 }`;
 
 export const routeGettersTemplate = `

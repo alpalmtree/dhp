@@ -2,7 +2,7 @@
  * This file will only be generated only if it doesn't exists.
  * It is an exact copy of the default config used by HWR.
  * Feel free to remove the options that you don't need.
- */
+*/
 import type { Config } from "dhp/mod.ts";
 
 export default {

@@ -17,5 +17,13 @@
       "ts": "jsx-runtime.d.ts"
     },
     "additionalFiles": ["html.ts", "css.ts"]
+  },
+  "@std/http/file-server": {
+    "registry": "jsr",
+    "alias": "std",
+    "entries": {
+      "js": "http_file-server.js"
+    },
+    "exports": ["serveDir"]
   }
 }

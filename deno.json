@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "vendor": "deno run -A scripts/vendor.ts",
     "release": "deno run -A scripts/release.ts",
     "test:run": "deno test -A __tests__/tests",
     "test:new": "deno run -A scripts/new_test.ts"
