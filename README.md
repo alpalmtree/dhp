@@ -115,8 +115,8 @@ export const name = "index";
 // actions are functions called only via POST and GET methods. You can use the action helper to get intellisense.
 // It would be equivalent to making a request to the current route with a ?action=actionName param.
 export const actions = {
-  createUser: (_ctx: DHPContext) => {
-    return <Index user="Working" />;
+  createUser: (ctx: DHPContext) => {
+    return <Index ctx={ctx} user="Working" />;
   },
 };
 

@@ -1,13 +1,10 @@
-import { cwd } from "node:process";
-import { existsSync, readdirSync } from "node:fs";
+import { exists, walk } from "./deps/std.ts";
 import type { Config } from "./config.ts";
 
-const isFile = (path: string) => path.includes(".");
+const { cwd } = Deno;
 
 export const transformPath = (path: string) => {
-  const segments = path.split("/").map((segment: string) =>
-    isFile(segment) ? segment.split(".") : segment
-  );
+  const segments = path.split("/").map((segment: string) => segment.split("."));
   const segmentsToRoute = segments.map((segment: string | string[]) => {
     if (Array.isArray(segment)) {
       return segment.at(0);
@@ -16,10 +13,10 @@ export const transformPath = (path: string) => {
   });
   const route = segmentsToRoute.map((segment) => {
     if (segment === "index") return `/`;
-    if (segment?.startsWith("$")) return `/${segment.replace("$", ":")}`;
-    if (segment === "[all]") return "/**";
-    return `/${segment}`;
-  }).join("");
+    if (segment?.startsWith("$")) return `${segment.replace("$", ":")}`;
+    if (segment === "[all]") return "**";
+    return `${segment}`;
+  }).join("/");
 
   const noBackSlash = (route.length > 1 && route.endsWith("/"))
     ? route.slice(0, -1)
@@ -28,36 +25,39 @@ export const transformPath = (path: string) => {
   return noBackSlash;
 };
 
-export const getPaths = (appConfig?: Config) => {
+export const getPaths = async (appConfig?: Config) => {
   const routerFolderPath: string = `${cwd()}${appConfig?.viewsDir ?? "/views"}`;
 
-  if (!existsSync(routerFolderPath)) return [];
-  const dirs = readdirSync(routerFolderPath, { recursive: true }) as string[];
-  const allPaths = dirs
-    .toReversed()
-    .filter(
-      (path) => isFile(path as string) && !path.startsWith("."),
-    );
+  if (!await exists(routerFolderPath)) return [];
 
-  const { staticPaths, dynamicPaths } = allPaths.reduce(
-    (prev, current) => {
-      (current.includes("$") || current.includes("[all]"))
-        ? prev.dynamicPaths.push(current)
-        : prev.staticPaths.push(current);
-      return prev;
-    },
-    { dynamicPaths: [], staticPaths: [] } as {
-      dynamicPaths: string[];
-      staticPaths: string[];
-    },
-  );
+  const staticPaths = [];
+  const wildcardPaths = [];
+  const dynamicPaths = [];
+  for await (
+    const file of walk(routerFolderPath, { exts: ["ts", "tsx", "js", "jsx"] })
+  ) {
+    const relativePath = file.path.replace(
+      `${cwd()}${appConfig?.viewsDir ?? "/views"}`,
+      "",
+    );
+    if (!file.isFile || relativePath.startsWith("/.")) continue;
+
+    relativePath.includes("$")
+      ? dynamicPaths.push(relativePath)
+      : relativePath.includes("[all]")
+      ? wildcardPaths.push(relativePath)
+      : staticPaths.push(relativePath);
+  }
+
+  const sortBySegmentsLength = (a: string, b: string) => {
+    return (b.split("/").length - 1) - (a.split("/").length - 1);
+  };
 
   const paths = [
     ...staticPaths,
-    ...dynamicPaths.sort((a, _b) => {
-      if (a.includes("[all]")) return 1;
-      return -1;
-    }),
+    ...dynamicPaths.toSorted(sortBySegmentsLength),
+    ...wildcardPaths.toSorted(sortBySegmentsLength),
   ];
+
   return paths;
 };

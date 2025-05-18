@@ -1,4 +1,4 @@
-import { fs } from "./deps/std.ts";
+import { ensureDir, serveDir } from "./deps/std.ts";
 
 import { type Config, getConfig } from "./config.ts";
 import { viteDevServer, viteSetup } from "./viteSetup.ts";
@@ -11,7 +11,6 @@ import {
 } from "./appGlobals.ts";
 import { writeTypesFiles } from "./writeFiles.ts";
 import { Router } from "./router.ts";
-import { serveDir } from "./deps/std/http_file-server.js";
 
 /**
  * Configuration for your app. It has its default options
@@ -31,7 +30,7 @@ export let appGlobals: AppGlobals;
 const main = async (
   resolver: Resolver,
 ): Promise<void> => {
-  await fs.ensureDir(`${Deno.cwd()}/.dhp`);
+  await ensureDir(`${Deno.cwd()}/.dhp`);
   appGlobals = getGlobalVariables();
 
   if (appConfig.useVite) await viteSetup(appConfig);
@@ -58,8 +57,8 @@ const startServer = (config: Config, serveStatic: boolean) =>
     | Deno.ServeTcpOptions
     | (Deno.ServeTcpOptions & Deno.TlsCertifiedKeyPem),
 ) => {
-  serveStatic
-    ? Deno.serve(options ?? {}, async (req) => {
+  if (serveStatic) {
+    Deno.serve(options ?? {}, async (req) => {
       const response = await Router.handle(req);
       if (response.status === 404) {
         return serveDir(req, {
@@ -68,8 +67,10 @@ const startServer = (config: Config, serveStatic: boolean) =>
         });
       }
       return response;
-    })
-    : Deno.serve(Router.handle);
+    });
+  } else {
+    Deno.serve(Router.handle);
+  }
 };
 
 /**

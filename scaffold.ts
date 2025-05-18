@@ -1,6 +1,6 @@
 import { generateTemplateFiles } from "./src/writeFiles.ts";
-import { fs } from "./src/deps/std.ts";
-const { exists, ensureDir } = fs;
+import { ensureDir, exists } from "./src/deps/std.ts";
+
 import { currentVersion } from "./scripts/current_version.ts";
 
 const REMOTE_URL =
@@ -11,15 +11,10 @@ const writeIfNotExists = async (fileRelativePath: string): Promise<void> => {
 
   const file = await fetch(`${REMOTE_URL}${fileRelativePath}`);
   const fileContent = await file.text();
-
-  return new Promise((resolve) => {
-    Deno.writeTextFile(
-      `${Deno.cwd()}${fileRelativePath}`,
-      fileContent,
-    );
-
-    resolve();
-  });
+  return Deno.writeTextFile(
+    `${Deno.cwd()}${fileRelativePath}`,
+    fileContent,
+  );
 };
 
 const baseDenoConfig = {
@@ -50,7 +45,7 @@ if (!await exists(`${Deno.cwd()}/deno.json`)) {
   );
 }
 
-await fs.ensureDir(`${Deno.cwd()}/.dhp`);
+await ensureDir(`${Deno.cwd()}/.dhp`);
 
 await Promise.all([
   ensureDir(`${Deno.cwd()}/resources`),

@@ -46,7 +46,7 @@ type PopulateGlobalsProps = {
 export const populateGlobals = async (
   { appConfig, appGlobalsInstance, resolver }: PopulateGlobalsProps,
 ): Promise<void> => {
-  const paths = getPaths(appConfig);
+  const paths = await getPaths(appConfig);
 
   for (const path of paths) {
     const exportPath = `${cwd()}${appConfig.viewsDir}/${path}`;

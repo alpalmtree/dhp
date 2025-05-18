@@ -7,9 +7,10 @@ globalThis.onbeforeunload = () => {
   emptyDir(`${testsPath}scaffolded_app`);
 };
 
+changeDir("scaffolded_app");
+
 Deno.test("Should scaffold the basic template", async (t) => {
   await t.step("Run scaffold file without failing", async () => {
-    changeDir("scaffolded_app");
     await runCommand(`deno run -A ${rootDir}/scaffold.ts`);
   });
 
