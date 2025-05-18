@@ -7,7 +7,7 @@
  * @module
  */
 
-import { fs } from "./deps/std.ts";
+import { ensureDir } from "./deps/std.ts";
 
 import { generateTemplateFiles } from "./writeFiles.ts";
 
@@ -19,7 +19,7 @@ if (!command || !availableCommands.includes(command)) {
   console.log(`Available commands are: ${availableCommands.join(" | ")}`);
   Deno.exit();
 }
-await fs.ensureDir(`${Deno.cwd()}/.dhp`);
+await ensureDir(`${Deno.cwd()}/.dhp`);
 
 const commands: { [key: string]: () => void } = {
   "init": () => {

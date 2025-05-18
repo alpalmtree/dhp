@@ -17,13 +17,17 @@ class ResponseFactory {
 }
 
 export type AllowedMethods = "GET" | "POST" | "ALL";
-export type DHPContext<T = unknown> = {
+export type DHPContext<T = any> = {
   req: Request;
   params?: { [key: string]: string };
   additionalContext?: T;
+  vars: T;
 };
+
+export type DecoratedContext<T = any> = T & DHPContext;
+
 export type RouteHandler = (
-  ctx: DHPContext,
+  ctx: DHPContext<any>,
 ) => BodyInit | Response | Promise<BodyInit | Response>;
 
 type HookCallback<T> = (ctx: DHPContext) => T;
@@ -67,12 +71,12 @@ export type RouterInstance = {
 };
 
 const context = (
-  { req, params, additionalContext }: DHPContext,
+  { req, params, vars }: DHPContext,
 ): DHPContext => {
   return {
     req,
     ...(params ? { params } : {}),
-    ...(additionalContext ? { additionalContext } : {}),
+    ...(vars ? { vars } : { vars: {} }),
   };
 };
 
@@ -106,7 +110,7 @@ export const Router: RouterInstance = {
     }
   },
   handle: async (req: Request) => {
-    const currentContext = context({ req });
+    const currentContext = context({ req, vars: {} });
 
     const matchedRoute = findRoute(
       Router.routesRegistry,

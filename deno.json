@@ -17,5 +17,10 @@
     "dhp/jsx-runtime": "./src/deps/ssx/jsx-runtime.js",
     "#src/": "./src/",
     "#tests/": "./__tests__/"
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
   }
 }
